@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drackett Tower Floor 3 - OSU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel = style href="styleaheet.css">
+    <link rel = script href="script.js">
+</head>
+<body>
+    <!-- No loading screen -->
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="osu-logo" style="width: 70px; height: 70px; background: #f1f5f9; border: 2px solid #E31837; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #E31837; font-weight: 600; font-size: 12px;">OSU Logo</div>
+                    <div class="header-text">
+                        <h1>Drackett Tower - Floor 3</h1>
+                        <p>Your Home Away From Home</p>
+                    </div>
+                </div>
+                
+                <!-- CSS-only Hamburger Menu -->
+                <nav>
+                    <input type="checkbox" id="check">
+                    <label for="check" class="checkbtn">
+                        <div class="hamburger-lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </label>
+                    <!-- Overlay to close menu when clicked -->
+                    <label for="check" class="menu-overlay"></label>
+                    <div class="nav-mobile">
+                        <a href="#" onclick="navigateToSection('home'); return false;">Home</a>
+                        <a href="#" onclick="navigateToSection('ra-contact'); return false;">Your RAs</a>
+                        <a href="#" onclick="navigateToSection('osu-links'); return false;">OSU Resources</a>
+                        <a href="#" onclick="navigateToSection('chatbot'); return false;">RA Assistant</a>
+                        <a href="#" onclick="navigateToSection('newsletters'); return false;">Newsletters</a>
+                        <a href="#" onclick="navigateToSection('events'); return false;">Events & Deadlines</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="content-section">
+            <h2 class="section-title">Welcome to Drackett Tower Floor 3!</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">
+                Welcome to your home on the third floor of Drackett Tower! This website is your one-stop resource for everything you need to know about living on our floor. Here you'll find important information, upcoming events, helpful resources, and ways to connect with your Resident Assistants.
+            </p>
+            
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(187, 0, 0, 0.2); padding: 32px; border-radius: var(--border-radius); margin: 24px 0; box-shadow: var(--shadow-soft);">
+                <h3 style="margin-bottom: 20px; color: var(--osu-red); font-weight: 600;">🏠 Floor 3 Quick Facts</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 1.5rem;">📍</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Location:</strong>
+                            <br><span style="color: var(--text-secondary);">Drackett Tower, 3rd Floor</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 1.5rem;">👥</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Community:</strong>
+                            <br><span style="color: var(--text-secondary);">Your floor family</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 1.5rem;">🎓</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">University:</strong>
+                            <br><span style="color: var(--text-secondary);">The Ohio State University</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 1.5rem;">📞</span>
+                        <div>
+                            <strong style="color: var(--text-primary);">Support:</strong>
+                            <br><span style="color: var(--text-secondary);">24/7 RA assistance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 24px; color: var(--text-secondary); line-height: 1.7;">
+                Use the navigation above to explore different sections of our floor website. Don't hesitate to reach out to your RAs if you have any questions or need assistance!
+            </p>
+        </section>
+
+        <!-- RA Contact Section -->
+        <section id="ra-contact" class="content-section">
+            <h2 class="section-title">Meet Your RAs</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">Your Resident Assistants are here to support you throughout your time at OSU. Feel free to reach out anytime!</p>
+            
+            <div class="ra-cards">
+                <div class="ra-card">
+                    <div class="ra-avatar">RA1</div>
+                    <h3>[RA Name 1]</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;"><strong>Year:</strong> [Junior/Senior] | <strong>Major:</strong> [Major]</p>
+                    <div class="contact-info">
+                        <p><span>📧</span> [ra1email]@osu.edu</p>
+                        <p><span>📱</span> [Phone Number]</p>
+                        <p><span>🚪</span> Room [Room Number]</p>
+                        <p><span>⏰</span> Office Hours: [Hours]</p>
+                    </div>
+                </div>
+                
+                <div class="ra-card">
+                    <div class="ra-avatar">RA2</div>
+                    <h3>[RA Name 2]</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;"><strong>Year:</strong> [Junior/Senior] | <strong>Major:</strong> [Major]</p>
+                    <div class="contact-info">
+                        <p><span>📧</span> [ra2email]@osu.edu</p>
+                        <p><span>📱</span> [Phone Number]</p>
+                        <p><span>🚪</span> Room [Room Number]</p>
+                        <p><span>⏰</span> Office Hours: [Hours]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OSU Links Section -->
+        <section id="osu-links" class="content-section">
+            <h2 class="section-title">OSU Resources</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">Quick access to important Ohio State University resources and services.</p>
+            
+            <div class="osu-links">
+                <a href="https://buckeyelink.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">🔗</span>
+                    <h3>BuckeyeLink</h3>
+                    <p>Student Information System</p>
+                </a>
+                
+                <a href="https://canvas.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">📚</span>
+                    <h3>Canvas</h3>
+                    <p>Learning Management System</p>
+                </a>
+                
+                <a href="https://library.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">📖</span>
+                    <h3>OSU Libraries</h3>
+                    <p>Research & Study Resources</p>
+                </a>
+                
+                <a href="https://dining.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">🍽️</span>
+                    <h3>Dining Services</h3>
+                    <p>Meal Plans & Locations</p>
+                </a>
+                
+                <a href="https://counseling.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">💙</span>
+                    <h3>CAPS</h3>
+                    <p>Counseling & Psychological Services</p>
+                </a>
+                
+                <a href="https://slds.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">♿</span>
+                    <h3>SLDS</h3>
+                    <p>Student Life Disability Services</p>
+                </a>
+                
+                <a href="https://urgentcare.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">🏥</span>
+                    <h3>Student Health</h3>
+                    <p>Wilce Student Health Center</p>
+                </a>
+                
+                <a href="https://housing.osu.edu" class="link-card" target="_blank">
+                    <span class="link-icon">🏠</span>
+                    <h3>Housing</h3>
+                    <p>University Housing</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Chatbot Section -->
+        <section id="chatbot" class="content-section">
+            <h2 class="section-title">RA Assistant Chatbot</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">Get instant answers to common questions about floor policies, events, and university resources.</p>
+            
+            <div class="chatbot-container">
+                <div class="chat-header">
+                    🤖 Floor 3 RA Assistant
+                </div>
+                <div class="chat-interface">
+                    <div class="chat-placeholder">
+                        <h3 style="color: var(--osu-red); margin-bottom: 20px; font-weight: 600;">Coming Soon!</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">The RA Assistant chatbot is currently being developed. It will help answer questions about:</p>
+                        <ul style="text-align: left; margin: 20px 0; display: inline-block; color: var(--text-secondary);">
+                            <li style="margin: 8px 0;">Floor policies and procedures</li>
+                            <li style="margin: 8px 0;">Upcoming events and programs</li>
+                            <li style="margin: 8px 0;">University resources and services</li>
+                            <li style="margin: 8px 0;">Common housing questions</li>
+                            <li style="margin: 8px 0;">Emergency procedures</li>
+                        </ul>
+                        <p style="font-weight: 600; color: var(--osu-red);">Check back soon for the full interactive experience!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletters Section -->
+        <section id="newsletters" class="content-section">
+            <h2 class="section-title">Floor Newsletters</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">Stay updated with our monthly newsletters featuring floor news, upcoming events, and important announcements.</p>
+            
+            <div class="newsletter-grid">
+                <div class="newsletter-item">
+                    <div class="pdf-icon">📄</div>
+                    <h3 style="font-weight: 600; margin-bottom: 12px;">January 2025 Newsletter</h3>
+                    <p style="color: var(--text-secondary);">New year, new floor activities and spring semester info</p>
+                    <button class="download-btn" onclick="alert('Newsletter download coming soon!')">Download PDF</button>
+                </div>
+                
+                <div class="newsletter-item">
+                    <div class="pdf-icon">📄</div>
+                    <h3 style="font-weight: 600; margin-bottom: 12px;">December 2024 Newsletter</h3>
+                    <p style="color: var(--text-secondary);">Holiday events recap and winter break information</p>
+                    <button class="download-btn" onclick="alert('Newsletter download coming soon!')">Download PDF</button>
+                </div>
+                
+                <div class="newsletter-item">
+                    <div class="pdf-icon">📄</div>
+                    <h3 style="font-weight: 600; margin-bottom: 12px;">November 2024 Newsletter</h3>
+                    <p style="color: var(--text-secondary);">Fall semester highlights and thanksgiving break details</p>
+                    <button class="download-btn" onclick="alert('Newsletter download coming soon!')">Download PDF</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events & Deadlines Section -->
+        <section id="events" class="content-section">
+            <h2 class="section-title">Upcoming Events & Deadlines</h2>
+            <p style="margin-bottom: 24px; color: var(--text-secondary); line-height: 1.7;">Stay on top of important dates, floor events, and university deadlines.</p>
+            
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-date">Aug 20, 2025</div>
+                    <div class="event-title">Floor Meeting</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Monthly floor meeting in the common area. Pizza will be provided!</p>
+                    <p style="color: var(--text-primary);"><strong>Time:</strong> 7:00 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Location:</strong> 3rd Floor Lounge</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">Aug 25, 2025</div>
+                    <div class="event-title">Study Group</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Group study session for midterm exams. Bring your materials and snacks!</p>
+                    <p style="color: var(--text-primary);"><strong>Time:</strong> 6:00 PM - 9:00 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Location:</strong> Study Room</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">Sep 1, 2025</div>
+                    <div class="event-title">Movie Night</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Floor movie night with popcorn and drinks. Vote for the movie on our floor group!</p>
+                    <p style="color: var(--text-primary);"><strong>Time:</strong> 8:00 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Location:</strong> 3rd Floor Lounge</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">Sep 5, 2025</div>
+                    <div class="event-title">🚨 Deadline: Housing Contract</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Spring housing contract renewal deadline. Don't forget to submit!</p>
+                    <p style="color: var(--text-primary);"><strong>Submit by:</strong> 11:59 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Platform:</strong> Housing Portal</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">Sep 10, 2025</div>
+                    <div class="event-title">Floor Game Tournament</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Video game and board game tournament with prizes for winners!</p>
+                    <p style="color: var(--text-primary);"><strong>Time:</strong> 2:00 PM - 6:00 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Location:</strong> Recreation Room</p>
+                </div>
+                
+                <div class="event-card">
+                    <div class="event-date">Sep 15, 2025</div>
+                    <div class="event-title">🚨 Deadline: Course Registration</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Spring semester course registration deadline for continuing students</p>
+                    <p style="color: var(--text-primary);"><strong>Submit by:</strong> 11:59 PM</p>
+                    <p style="color: var(--text-primary);"><strong>Platform:</strong> BuckeyeLink</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="margin-bottom: 8px;">&copy; 2025 Drackett Tower Floor 3 | The Ohio State University</p>
+                <p style="color: var(--text-secondary);">For emergencies, contact OSU Public Safety: (614) 292-2121</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
