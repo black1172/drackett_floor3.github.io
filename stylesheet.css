@@ -194,6 +194,10 @@
             transform: scale(1.05) rotate(5deg);
         }
 
+        .header-text {
+            margin-left: -10px;
+        }
+
         .header-text h1 {
             font-size: 2rem;
             font-weight: 700;
@@ -615,5 +619,5 @@
         }
 
         main.container {
-            margin-top: 50px; /* Adjust this value to match your header height */
+            margin-top: 0px; /* Adjust this value to match your header height */
         }
