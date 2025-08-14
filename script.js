@@ -1,4 +1,3 @@
-<script>
     function initNavigation() {
         const navContainer = document.querySelector('nav');
         const navItems = document.querySelectorAll('.nav-item');
@@ -45,4 +44,3 @@
         // Test nav visibility without waiting for long animations
         setTimeout(hideLoadingOverlay, 500);
     });
-</script>
