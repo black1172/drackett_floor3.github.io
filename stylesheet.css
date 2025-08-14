@@ -604,3 +604,16 @@
             from { transform: translateX(-30px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
+
+        /* Ensure header does not overlap main content */
+        header {
+            position: relative; /* or sticky/fixed if desired */
+            z-index: 10;
+            width: 100%;
+            background: var(--glass-bg);
+            box-shadow: var(--shadow-soft);
+        }
+
+        main.container {
+            margin-top: 120px; /* Adjust this value to match your header height */
+        }
