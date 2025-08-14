@@ -44,12 +44,3 @@ function initNavigation() {
         // Test nav visibility without waiting for long animations
         setTimeout(hideLoadingOverlay, 500);
     });
-
-    <nav>
-  <a href="#home" class="nav-item">Home</a>
-  <a href="#ra-contact" class="nav-item">Meet Your RAs</a>
-  <a href="#osu-links" class="nav-item">OSU Resources</a>
-  <a href="#chatbot" class="nav-item">Chatbot</a>
-  <a href="#newsletters" class="nav-item">Newsletters</a>
-  <a href="#events" class="nav-item">Events & Deadlines</a>
-</nav>
