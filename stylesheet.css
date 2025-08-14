@@ -1,4 +1,4 @@
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -77,20 +77,6 @@
             display: none;
         }
 
-        .checkbtn {
-            cursor: pointer;
-            padding: 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: transparent;
-            border: 2px solid transparent;
-        }
-
-        .checkbtn:hover {
-            background: #f1f5f9;
-            border-color: var(--osu-red);
-        }
-
         .hamburger-lines {
             display: flex;
             flex-direction: column;
@@ -118,6 +104,18 @@
 
         #check:checked ~ .checkbtn .hamburger-lines span:nth-child(3) {
             transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Hamburger hover animation */
+        .checkbtn:hover .hamburger-lines span {
+            background: var(--osu-red-dark);
+            transform: scaleX(1.15);
+            box-shadow: 0 2px 8px rgba(187, 0, 0, 0.15);
+        }
+
+        /* Optional: Smooth transition for transform and box-shadow */
+        .hamburger-lines span {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Mobile menu styles */
