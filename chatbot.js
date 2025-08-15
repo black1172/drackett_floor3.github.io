@@ -17,25 +17,16 @@ function searchChunks(query) {
 // Send message to AI
 async function sendMessage() {
     const inputElem = document.getElementById("chat-input");
-    const chatBox = document.getElementById("chat-box");
     const input = inputElem.value.trim();
     if (!input) return;
 
     displayMessage("You", input);
 
-    const topChunks = searchChunks(input);
-    const prompt = `Answer the question based on these documents:\n${topChunks.map(c => c.text).join("\n")}\n\nQuestion: ${input}`;
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const topChunks = searchChunks(input); // Your JSON search function
+    const response = await fetch("https://ra-chatbot-backend.onrender.com/chat", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer YOUR_OPENAI_KEY" // replace with env method if possible
-        },
-        body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [{ role: "user", content: prompt }]
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input, chunks: topChunks.map(c => c.text) })
     });
 
     const data = await response.json();
