@@ -23,7 +23,7 @@ async function sendMessage() {
     displayMessage("You", input);
 
     const topChunks = searchChunks(input); // Your JSON search function
-    const response = await fetch("https://ra-chatbot-backend.onrender.com/chat", {
+    const response = await fetch("https://drackett_floor3.github.io.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input, chunks: topChunks.map(c => c.text) })
@@ -35,10 +35,22 @@ async function sendMessage() {
     inputElem.value = "";
 }
 
+// Improved displayMessage for iMessage-style UI
 function displayMessage(sender, text) {
-    const chatBox = document.getElementById("chat-box");
-    const msg = document.createElement("p");
-    msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
-    chatBox.appendChild(msg);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    const chatMessages = document.getElementById("chat-messages");
+    const msg = document.createElement("div");
+    msg.classList.add("chat-message");
+    msg.classList.add(sender === "You" ? "user" : "bot");
+    msg.innerHTML = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+// Event listeners for send button and Enter key
+document.getElementById("chat-send").addEventListener("click", sendMessage);
+document.getElementById("chat-input").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+    }
+});
