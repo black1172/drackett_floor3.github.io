@@ -1,9 +1,56 @@
-async function sendMessage(message) {
-    const response = await fetch("https://your-render-url.onrender.com/chat", {
+let chunks = [];
+
+// Load chunked data from JSON file in your repo
+async function loadChunks() {
+    const res = await fetch('data/chunks.json');
+    chunks = await res.json();
+}
+loadChunks();
+
+// Simple keyword search (replace with vector search if needed)
+function searchChunks(query) {
+    return chunks
+        .filter(c => c.text.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 3); // top 3 matches
+}
+
+// Send message to AI
+async function sendMessage() {
+    const inputElem = document.getElementById("chat-input");
+    const input = inputElem.value.trim();
+    if (!input) return;
+
+    displayMessage("You", input);
+
+    const topChunks = searchChunks(input); // Your JSON search function
+    const response = await fetch("https://drackett_floor3.github.io.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({ message: input, chunks: topChunks.map(c => c.text) })
     });
+
     const data = await response.json();
-    return data.response;
+    displayMessage("Bot", data.choices[0].message.content);
+
+    inputElem.value = "";
 }
+
+// Improved displayMessage for iMessage-style UI
+function displayMessage(sender, text) {
+    const chatMessages = document.getElementById("chat-messages");
+    const msg = document.createElement("div");
+    msg.classList.add("chat-message");
+    msg.classList.add(sender === "You" ? "user" : "bot");
+    msg.innerHTML = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Event listeners for send button and Enter key
+document.getElementById("chat-send").addEventListener("click", sendMessage);
+document.getElementById("chat-input").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+    }
+});
