@@ -14,6 +14,8 @@ function searchChunks(query) {
         .slice(0, 3); // top 3 matches
 }
 
+const BACKEND_URL = "https://drackett-floor3-github-io.onrender.com"; // Replace with your actual URL
+
 // Send message to AI
 async function sendMessage() {
     const inputElem = document.getElementById("chat-input");
@@ -22,15 +24,15 @@ async function sendMessage() {
 
     displayMessage("You", input);
 
-    const topChunks = searchChunks(input); // Your JSON search function
-    const response = await fetch("https://drackett_floor3.github.io.onrender.com/chat", {
+    // If you use chunks, add them here; otherwise, just send the message
+    const response = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input, chunks: topChunks.map(c => c.text) })
+        body: JSON.stringify({ message: input })
     });
 
     const data = await response.json();
-    displayMessage("Bot", data.choices[0].message.content);
+    displayMessage("Bot", data.response || data.choices[0].message.content);
 
     inputElem.value = "";
 }
