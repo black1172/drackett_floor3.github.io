@@ -1,10 +1,20 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import os
 
 app = FastAPI()
 
-OPENAI_KEY = os.environ.get("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")
+# Allow requests from your GitHub Pages domain
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://YOUR_GITHUB_USERNAME.github.io"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
 
 @app.post("/chat")
 async def chat(req: Request):
