@@ -50,6 +50,9 @@ function displayMessage(sender, text) {
 
 // Event listeners for send button and Enter key
 window.addEventListener("DOMContentLoaded", function() {
+    // Welcome message
+    displayMessage("Bot", "👋 Hi! I'm your RA Assistant. How can I help you today?");
+    
     document.getElementById("chat-send").addEventListener("click", function(e) {
         e.preventDefault();
         sendMessage();
