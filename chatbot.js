@@ -14,7 +14,7 @@ function searchChunks(query) {
         .slice(0, 3); // top 3 matches
 }
 
-const BACKEND_URL = "https://drackett-floor3-github-io.onrender.com"; // Replace with your actual URL
+const BACKEND_URL = "https://drackett-floor3-github-io.onrender.com/chat"; // Replace with your actual URL
 
 // Send message to AI
 async function sendMessage() {

@@ -33,13 +33,18 @@ function hideLoadingOverlay() {
     const header = document.querySelector('header');
     const nav = document.querySelector('nav');
 
-    // Fade out overlay
-    loadingOverlay.style.opacity = '0';
-    setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-        header.style.visibility = 'visible';
-        nav.style.visibility = 'visible';
-    }, 200);
+    if (loadingOverlay) {
+        // Fade out overlay
+        loadingOverlay.style.opacity = '0';
+        setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+            if (header) header.style.visibility = 'visible';
+            if (nav) nav.style.visibility = 'visible';
+        }, 200);
+    } else {
+        if (header) header.style.visibility = 'visible';
+        if (nav) nav.style.visibility = 'visible';
+    }
 }
 
 window.addEventListener('load', function () {
