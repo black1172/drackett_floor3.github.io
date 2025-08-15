@@ -180,15 +180,15 @@
         <!-- Chatbot Section -->
         <section id="chatbot" class="content-section">
             <h2 class="section-title">RA Assistant Chatbot</h2>
-            <div class="chatbox-ui">
+            <div class="chatbox-imessage">
                 <div class="chatbox-header">
                     <span class="chatbox-title">💬 Ask the RA Assistant</span>
                 </div>
                 <div id="chat-messages" class="chatbox-messages"></div>
-                <div class="chatbox-input-row">
+                <form class="chatbox-input-row" onsubmit="return false;">
                     <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
                     <button id="chat-send" class="chatbox-send-btn">Send</button>
-                </div>
+                </form>
             </div>
         </section>
 
