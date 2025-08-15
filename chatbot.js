@@ -32,7 +32,7 @@ async function sendMessage() {
     });
 
     const data = await response.json();
-    displayMessage("Bot", data.response || data.choices[0].message.content);
+    displayMessage("Bot", data.choices[0].message.content || data.response);
 
     inputElem.value = "";
 }

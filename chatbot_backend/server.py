@@ -36,4 +36,5 @@ async def chat(req: Request):
         }
     )
 
-    return resp.json()
+    data = resp.json()
+    return {"response": data.choices[0].message.content}
