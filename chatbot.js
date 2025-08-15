@@ -49,10 +49,15 @@ function displayMessage(sender, text) {
 }
 
 // Event listeners for send button and Enter key
-document.getElementById("chat-send").addEventListener("click", sendMessage);
-document.getElementById("chat-input").addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
+window.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("chat-send").addEventListener("click", function(e) {
         e.preventDefault();
         sendMessage();
-    }
+    });
+    document.getElementById("chat-input").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 });
