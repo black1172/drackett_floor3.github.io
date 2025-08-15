@@ -242,10 +242,6 @@
             to { transform: scale(1); opacity: 1; }
         }
 
-        .content-section.active {
-            /* Remove this rule since all sections are now always visible */
-        }
-
         .section-title {
             color: var(--osu-red);
             font-size: 2.5rem;
