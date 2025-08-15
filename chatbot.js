@@ -34,6 +34,7 @@ async function sendMessage() {
     const data = await response.json();
     displayMessage("Bot", data.choices[0].message.content || data.response);
 
+    console.log("Clearing input");
     inputElem.value = "";
 }
 
