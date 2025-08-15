@@ -178,13 +178,19 @@
         </section>
 
         <!-- Chatbot Section -->
-        <div class="chat-interface">
-            <div id="chat-messages" class="chat-messages"></div>
-            <div class="chat-input-container">
-                <input id="chat-input" type="text" placeholder="Type your message..." />
-                <button id="chat-send">Send</button>
+        <section id="chatbot" class="content-section">
+            <h2 class="section-title">RA Assistant Chatbot</h2>
+            <div class="chatbox-ui">
+                <div class="chatbox-header">
+                    <span class="chatbox-title">💬 Ask the RA Assistant</span>
+                </div>
+                <div id="chat-messages" class="chatbox-messages"></div>
+                <div class="chatbox-input-row">
+                    <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
+                    <button id="chat-send" class="chatbox-send-btn">Send</button>
+                </div>
             </div>
-        </div>
+        </section>
 
         <!-- Newsletters Section -->
         <section id="newsletters" class="content-section">
