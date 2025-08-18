@@ -17,11 +17,6 @@ app.add_middleware(
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
 print("Loaded API key:", OPENAI_KEY)
 
-headers = {
-    "Authorization": f"Bearer {OPENAI_KEY}",
-    "Content-Type": "application/json"
-}
-
 @app.post("/chat")
 async def chat(req: Request):
     body = await req.json()
@@ -53,8 +48,11 @@ async def chat(req: Request):
         }
     )
 
+    print("OpenAI response headers:", response.headers)  # Debug: show rate limit headers
+    print("OpenAI response status code:", response.status_code)
+    print("OpenAI response body:", response.text)
+
     data = response.json()
-    print(data)  # Debug: see what OpenAI returns
     if "choices" in data and data["choices"]:
         return {"response": data["choices"][0]["message"]["content"]}
     else:
