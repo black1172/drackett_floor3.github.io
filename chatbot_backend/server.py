@@ -33,6 +33,7 @@ async def chat(req: Request):
                 "If you don't know the answer, it's okay to say so. "
                 "Its most important to provide resources, connect the user with the right information."
                 "Remove instances of double asterisks in responses."
+                "For suicide concerns, refer to crisis hotline and 9-1-1"
             )
         },
         {"role": "user", "content": user_message}
