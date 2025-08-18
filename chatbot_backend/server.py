@@ -14,7 +14,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
+OPENAI_KEY = os.environ.get("OPENAI_KEY")
+
+headers = {
+    "Authorization": f"Bearer {OPENAI_KEY}",
+    "Content-Type": "application/json"
+}
 
 @app.post("/chat")
 async def chat(req: Request):
@@ -23,7 +28,7 @@ async def chat(req: Request):
 
     response = requests.post(
         "https://api.openai.com/v1/chat/completions",
-        headers={"Authorization": f"Bearer {OPENAI_KEY}", "Content-Type": "application/json"},
+        headers=headers,
         json={
             "model": "gpt-4o-mini",
             "messages": [{"role": "user", "content": user_message}]
