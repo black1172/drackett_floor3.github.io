@@ -38,3 +38,7 @@ async def chat(req: Request):
 
     data = resp.json()
     return {"response": data.choices[0].message.content}
+
+@app.get("/")
+async def root():
+    return {"message": "RA Chatbot backend is running."}
