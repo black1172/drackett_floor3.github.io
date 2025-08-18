@@ -31,7 +31,11 @@ async def chat(req: Request):
     )
 
     data = response.json()
-    return {"response": data["choices"][0]["message"]["content"]}
+    print(data)  # Debug: see what OpenAI returns
+    if "choices" in data and data["choices"]:
+        return {"response": data["choices"][0]["message"]["content"]}
+    else:
+        return {"response": "Sorry, I couldn't get a response from the AI."}
 
 @app.get("/")
 async def root():
