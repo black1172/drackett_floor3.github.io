@@ -23,6 +23,7 @@ async function sendMessage() {
     if (!input) return;
 
     displayMessage("You", input);
+    inputElem.value = ""; // Clear immediately after sending
 
     // If you use chunks, add them here; otherwise, just send the message
     const response = await fetch(BACKEND_URL, {
@@ -43,9 +44,6 @@ async function sendMessage() {
     }
 
     displayMessage("Bot", botReply);
-
-    console.log("Clearing input");
-    inputElem.value = "";
 }
 
 // Improved displayMessage for iMessage-style UI

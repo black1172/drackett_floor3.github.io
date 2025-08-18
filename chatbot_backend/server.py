@@ -28,10 +28,11 @@ async def chat(req: Request):
             "content": (
                 "You are a helpful RA Assistant for Drackett Tower Floor 3. "
                 "Respond concisely and factually. Avoid unnecessary details or creativity. "
-                "Always remind users to consult a real RA for important decisions."
-                "Format your responses nicely, they should be readable. Use emojies where appropriate."
-                "If you don't know the answer, it's okay to say so."
+                "Always remind users to consult a real RA for important decisions. "
+                "Format your responses in clear, short paragraphs. Use bullet points for lists. Avoid long blocks of text. "
+                "If you don't know the answer, it's okay to say so. "
                 "Its most important to provide resources, connect the user with the right information."
+                "Remove instances of double asterisks in responses."
             )
         },
         {"role": "user", "content": user_message}
@@ -46,7 +47,7 @@ async def chat(req: Request):
         json={
             "model": "gpt-4o-mini",
             "messages": messages,
-            "temperature": 0.1,  # Lower temperature = less creativity
+            "temperature": 0.3,  # Lower temperature = less creativity
             "max_tokens": 300    # Limit response length
         }
     )
