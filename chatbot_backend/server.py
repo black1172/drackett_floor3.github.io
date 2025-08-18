@@ -14,7 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OPENAI_KEY = os.environ.get("OPENAI_KEY")
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
+print("Loaded API key:", OPENAI_KEY)
 
 headers = {
     "Authorization": f"Bearer {OPENAI_KEY}",
@@ -26,12 +27,29 @@ async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
 
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a helpful RA Assistant for Drackett Tower Floor 3. "
+                "Respond concisely and factually. Avoid unnecessary details or creativity. "
+                "Always remind users to consult a real RA for important decisions."
+            )
+        },
+        {"role": "user", "content": user_message}
+    ]
+
     response = requests.post(
         "https://api.openai.com/v1/chat/completions",
-        headers=headers,
+        headers={
+            "Authorization": f"Bearer {OPENAI_KEY}",
+            "Content-Type": "application/json"
+        },
         json={
             "model": "gpt-4o-mini",
-            "messages": [{"role": "user", "content": user_message}]
+            "messages": messages,
+            "temperature": 0.1,  # Lower temperature = less creativity
+            "max_tokens": 300    # Limit response length
         }
     )
 
