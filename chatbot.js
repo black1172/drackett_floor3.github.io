@@ -32,7 +32,17 @@ async function sendMessage() {
     });
 
     const data = await response.json();
-    displayMessage("Bot", data.choices[0].message.content || data.response);
+    let botReply = "";
+
+    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+        botReply = data.choices[0].message.content;
+    } else if (data.response) {
+        botReply = data.response;
+    } else {
+        botReply = "Sorry, I couldn't get a response from the AI.";
+    }
+
+    displayMessage("Bot", botReply);
 
     console.log("Clearing input");
     inputElem.value = "";
