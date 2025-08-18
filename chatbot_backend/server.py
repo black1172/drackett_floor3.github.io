@@ -20,24 +20,18 @@ OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
 async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
-    chunks = body.get("chunks", [])
 
-    prompt = f"Answer the question using these document excerpts:\n{chunks}\n\nQuestion: {user_message}"
-
-    resp = requests.post(
+    response = requests.post(
         "https://api.openai.com/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {OPENAI_KEY}",
-            "Content-Type": "application/json"
-        },
+        headers={"Authorization": f"Bearer {OPENAI_KEY}", "Content-Type": "application/json"},
         json={
             "model": "gpt-4o-mini",
-            "messages": [{"role": "user", "content": prompt}]
+            "messages": [{"role": "user", "content": user_message}]
         }
     )
 
-    data = resp.json()
-    return {"response": data.choices[0].message.content}
+    data = response.json()
+    return {"response": data["choices"][0]["message"]["content"]}
 
 @app.get("/")
 async def root():
