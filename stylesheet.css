@@ -845,3 +845,9 @@
         main.container {
             margin-top: 0px; /* Adjust this value to match your header height */
         }
+
+        body.dark-mode .chatbox-imessage {
+            background: #23232b !important;
+            color: #f1f5f9;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        }
