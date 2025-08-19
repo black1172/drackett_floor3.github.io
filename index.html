@@ -8,6 +8,62 @@
     <link rel="stylesheet" href="stylesheet.css">
     <script src="script.js"></script>
     <script src="chatbot.js"></script>
+    <style>
+        :root {
+            --osu-red: #E31837;
+            --glass-bg: rgba(255,255,255,0.85);
+            --text-primary: #222;
+            --text-secondary: #555;
+            --border-radius: 18px;
+            --shadow-soft: 0 4px 24px rgba(0,0,0,0.10);
+        }
+        body.dark-mode {
+            --glass-bg: rgba(34,34,34,0.92);
+            --text-primary: #f1f5f9;
+            --text-secondary: #bdbdbd;
+            background: #18181b;
+        }
+        body.dark-mode header,
+        body.dark-mode main,
+        body.dark-mode footer {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+        }
+        body.dark-mode .content-section,
+        body.dark-mode .newsletter-item,
+        body.dark-mode .event-card,
+        body.dark-mode .ra-card,
+        body.dark-mode .chatbox-imessage {
+            background: rgba(34,34,34,0.98);
+            color: var(--text-primary);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+        }
+        body.dark-mode .chatbox-header {
+            background: var(--osu-red);
+            color: #fff;
+        }
+        body.dark-mode .chat-message.bot {
+            background: #222;
+            color: #f1f5f9;
+        }
+        body.dark-mode .chat-message.user {
+            background: #E31837;
+            color: #fff;
+        }
+        body.dark-mode .chatbox-input-row {
+            background: #222;
+        }
+        body.dark-mode .chatbox-send-btn {
+            background: var(--osu-red);
+            color: #fff;
+        }
+        body.dark-mode .chatbox-send-btn:hover {
+            background: #b71c1c;
+        }
+        body.dark-mode .osu-logo {
+            background: #222 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- No loading screen -->
@@ -15,6 +71,10 @@
     <header>
         <div class="container">
             <div class="header-content">
+                <!-- Dark mode toggle button -->
+                <button id="darkModeToggle" style="position:absolute; top:24px; right:24px; background:#222; color:#fff; border:none; border-radius:8px; padding:8px 16px; font-weight:600; cursor:pointer; z-index:100;">
+                    🌙 Dark Mode
+                </button>
                 <div class="logo-section">
                     <img src="images/BlockO.jpg" alt="OSU Logo" class="osu-logo" style="width: 120px; height: 120px; border-radius: 12px; display: flex; align-items: center; justify-content: center; object-fit: contain;">
                     <div class="header-text">
@@ -286,5 +346,25 @@
             </div>
         </div>
     </footer>
+    <script>
+        // Dark mode toggle logic
+        const darkModeBtn = document.getElementById('darkModeToggle');
+        darkModeBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            darkModeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+        // Optionally, remember user preference
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️ Light Mode';
+        }
+        darkModeBtn.addEventListener('click', function() {
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('dark-mode', 'enabled');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+            }
+        });
+    </script>
 </body>
 </html>
