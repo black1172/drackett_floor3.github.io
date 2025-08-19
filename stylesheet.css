@@ -264,24 +264,36 @@
 
         /* Modern RA Cards */
         .ra-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .ra-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 340px;
+            margin: 0 auto;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(187, 0, 0, 0.2);
-            padding: 32px;
             border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--shadow-medium);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            padding: 32px 24px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 700px) {
+            .ra-cards {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+            .ra-card {
+                max-width: 95vw;
+                width: 100%;
+                margin: 0 auto 24px auto;
+            }
         }
 
         .ra-card::before {
