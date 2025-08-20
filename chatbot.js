@@ -52,7 +52,12 @@ function displayMessage(sender, text) {
     const chatBox = document.getElementById("chat-messages");
     const messageDiv = document.createElement("div");
     messageDiv.className = sender === "bot" ? "bot-message" : "user-message";
-    messageDiv.textContent = text;
+    // Convert Markdown to HTML for bot messages
+    if (sender === "bot") {
+        messageDiv.innerHTML = marked.parse(text);
+    } else {
+        messageDiv.textContent = text;
+    }
     chatBox.appendChild(messageDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 }
