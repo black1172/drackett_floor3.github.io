@@ -10,7 +10,7 @@ const BACKEND_URL = "https://serial-controlled-throat-tools.trycloudflare.com/ch
 // Send message to AI
 async function sendMessage() {
     const input = document.getElementById("chatInput");
-    const chatBox = document.getElementById("chatBox");
+    const chatBox = document.getElementById("chat-messages");
     const userText = input.value.trim();
     if (!userText) return;
 
@@ -50,7 +50,7 @@ async function sendMessage() {
 
 // Improved displayMessage for iMessage-style UI
 function displayMessage(sender, text) {
-    const chatBox = document.getElementById("chatBox");
+    const chatBox = document.getElementById("chat-messages");
     const messageDiv = document.createElement("div");
     messageDiv.className = sender === "bot" ? "bot-message" : "user-message";
     messageDiv.textContent = text;
@@ -60,7 +60,7 @@ function displayMessage(sender, text) {
 
 // Check backend status
 async function checkBackendStatus() {
-    const chatBox = document.getElementById("chatBox");
+    const chatBox = document.getElementById("chat-messages");
     // Remove any existing messages
     chatBox.innerHTML = "";
 
