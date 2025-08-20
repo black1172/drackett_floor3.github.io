@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_MODEL = "llama3"
+OLLAMA_MODEL = "llama3:8b"
 
 CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data", "chunks.json")
 chunks = []
@@ -42,46 +42,18 @@ async def chat(req: Request):
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
-        "Format all lists using Markdown bullet points (e.g., '- item'). "
-        "Use bold for section headers (e.g., '**Quiet Hours**'). "
-        "Keep answers concise and easy to read. "
-        "Remind users to consult a real RA for important decisions. "
-        "Validate feelings and provide resources or recommendations when appropriate, especially if the resident expresses a need, concern, or asks for help. "
-        "You may offer tips, resources, or advice if you believe it would benefit the resident, but only if they are official OSU resources. "
-        "Please refrain from giving advice outside of OSU resources. "
-        "Actively listen to the resident and respond empathetically. "
-        "Do not repeat the same information in different words; avoid restating points. "
-        "Let the resident guide the discussion, but feel free to offer helpful OSU information or suggestions when relevant. "
-        "If the user's message is generic or not a real question (e.g., 'test', 'hello', 'I'm just checking in'), reply simply and briefly (e.g., 'Hey there!', 'Hello!', or 'Glad to hear from you! Let me know if you need anything.'). "
-        "If a resident expresses a feeling (e.g., 'I'm feeling stressed'), validate their feelings and offer OSU tips or resources that may help, or ask if they would like more information. "
-        "If a resident asks a specific question, answer directly and clearly, using bullet points or numbered lists if appropriate. "
-        "Here are examples:\n"
-        "- If a resident says 'I'm just checking in,' reply with a simple greeting and do not offer resources unless you sense they may need support.\n"
-        "- If a resident says 'I'm feeling stressed,' validate their feelings and offer helpful OSU tips or resources, or ask if they would like more.\n"
-        "- If a resident asks 'What are quiet hours?' answer directly with the information requested.\n"
-        "---\n"
-        "Example formatted answer:\n"
-        "Quiet hours in Drackett Tower are:\n"
-        "- Sunday to Thursday: 11pm to 8am\n"
-        "- Friday and Saturday: 1am to 8am\n\n"
-        "Please let me know if you have more questions!\n"
-        "---\n"
-        "Format all your answers similarly.\n"
-        "For example:\n"
-        "- If a resident says \"Hi, Hello, etc.\" reply with a simple greeting like \"Glad to hear from you! Let me know if you need anything.\" Do not offer resources unless you sense they may need support.\n"
-        "- If a resident says \"I'm feeling stressed,\" validate their feelings (e.g., \"I'm sorry you're feeling that way. Here are some tips that might help...\") and offer OSU resources or advice as appropriate.\n"
-        "- If a resident asks \"What are quiet hours?\" answer directly with the information requested.\n"
-        "- Only provide OSU resources, tips, or advice if you believe it would benefit the resident."
+        "Always use relevant information from the provided context (from RA resources in the chunks JSON file) to answer questions. "
+        "Format your answers clearly using short paragraphs and bullet-point lists when appropriate. "
+        "Keep responses concise and easy to read."
     )
     # Add previous messages to the prompt
     prompt = (
         f"{system_prompt}\n\n"
-        f"Conversation history:\n{history}\n\n"
+        f"Conversation history (most recent first):\n"
+        f"{history}\n\n"
         f"User: {user_message}\n"
         f"Context from RA resources:\n{context}\n\n"
     )
-
-    print("Context sent to model:", context)
 
     response = requests.post(
         "http://localhost:11434/api/generate",
