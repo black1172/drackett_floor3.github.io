@@ -14,7 +14,7 @@ function searchChunks(query) {
         .slice(0, 3); // top 3 matches
 }
 
-const BACKEND_URL = "https://usually-elementary-zero-port.trycloudflare.com/chat";
+const BACKEND_URL = "https://coleman-senior-scope-advertiser.trycloudflare.com/chat";
 
 // Send message to AI
 async function sendMessage() {
