@@ -64,12 +64,20 @@ async def chat(req: Request):
         }
     )
 
-    print("Ollama response status code:", response.status_code)
-    print("Ollama response body:", response.text)
+    # Collect all 'response' fields from each JSON line
+    full_response = ""
+    for line in response.iter_lines():
+        if line:
+            try:
+                obj = json.loads(line)
+                full_response += obj.get("response", "")
+            except Exception:
+                continue
 
-    data = response.json()
-    if "response" in data:
-        return {"response": data["response"]}
+    print("Ollama full response:", full_response)
+
+    if full_response:
+        return {"response": full_response}
     else:
         return {"response": "Sorry, I couldn't get a response from the AI."}
 
