@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import requests
-import os
 
 app = FastAPI()
 
@@ -14,49 +13,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
-print("Loaded API key:", OPENAI_KEY)
+OLLAMA_MODEL = "mistral"  # Change to your preferred model
 
 @app.post("/chat")
 async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
 
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are a helpful RA Assistant for Drackett Tower Floor 3. "
-                "Format your answers clearly using short paragraphs and lists. "
-                "Do not use asterisks (*) for formatting, even if they appear in provided data. "
-                "Use plain text or numbered/bulleted lists with dashes or numbers instead. "
-                "Always remind users to consult a real RA for important decisions."
-            )
-        },
-        {"role": "user", "content": user_message}
-    ]
+    system_prompt = (
+        "You are a helpful RA Assistant for Drackett Tower Floor 3. "
+        "Format your answers clearly using short paragraphs and lists. "
+        "Do not use asterisks (*) for formatting, even if they appear in provided data. "
+        "Use plain text or numbered/bulleted lists with dashes or numbers instead. "
+        "Always remind users to consult a real RA for important decisions."
+    )
+    prompt = f"{system_prompt}\nUser: {user_message}"
 
     response = requests.post(
-        "https://api.openai.com/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {OPENAI_KEY}",
-            "Content-Type": "application/json"
-        },
+        "http://localhost:11434/api/generate",
         json={
-            "model": "gpt-4o-mini",
-            "messages": messages,
-            "temperature": 0.3,  # Lower temperature = less creativity
-            "max_tokens": 300    # Limit response length
+            "model": OLLAMA_MODEL,
+            "prompt": prompt,
+            "temperature": 0.3,
+            "max_tokens": 300
         }
     )
 
-    print("OpenAI response headers:", response.headers)  # Debug: show rate limit headers
-    print("OpenAI response status code:", response.status_code)
-    print("OpenAI response body:", response.text)
+    print("Ollama response status code:", response.status_code)
+    print("Ollama response body:", response.text)
 
     data = response.json()
-    if "choices" in data and data["choices"]:
-        return {"response": data["choices"][0]["message"]["content"]}
+    if "response" in data:
+        return {"response": data["response"]}
     else:
         return {"response": "Sorry, I couldn't get a response from the AI."}
 
