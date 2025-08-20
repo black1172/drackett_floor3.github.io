@@ -61,7 +61,7 @@ async def chat(req: Request):
             "model": OLLAMA_MODEL,
             "prompt": prompt,
             "temperature": 0.1,
-            "max_tokens": 100
+            "max_tokens": 50
         }
     )
 

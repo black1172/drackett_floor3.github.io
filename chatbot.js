@@ -82,6 +82,7 @@ async function checkBackendStatus() {
 
 // Event listeners for send button and Enter key
 window.addEventListener("DOMContentLoaded", function() {
+    history = ""; // Clear history on page reload
     checkBackendStatus();
     document.getElementById("chat-send").addEventListener("click", function(e) {
         e.preventDefault();
