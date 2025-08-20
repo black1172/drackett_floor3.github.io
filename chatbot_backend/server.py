@@ -46,7 +46,23 @@ async def chat(req: Request):
         "If the user's message is generic, such as 'test', 'hello', or not a real question, reply simply and briefly (e.g., 'Hey there!' or 'Hello!'). "
         "Only provide detailed information or resources when the user asks a specific question."
         "Please use new lines, chunk responses for readability."
-        "DO NOT USE ASTERIKS '*"
+        "DO NOT USE ASTERIKS '*'. "
+        "When answering, use short paragraphs for explanations.  "
+        "If listing items, use bullet points like:\n"
+        "- Item one\n"
+        "- Item two\n\n"
+        "If the answer is a step-by-step process, use numbered lists:\n"
+        "1. First step\n"
+        "2. Second step\n\n"
+        "Always keep responses concise and easy to read."
+        "Here is an example of a well-formatted answer:\n"
+        "---\n"
+        "Quiet hours in Drackett Tower are:\n"
+        "- Sunday to Thursday: 11pm to 8am\n"
+        "- Friday and Saturday: 1am to 8am\n\n"
+        "Please let me know if you have more questions!\n"
+        "---\n"
+        "Format all your answers similarly."
     )
     prompt = (
         f"{system_prompt}\n\n"
@@ -60,7 +76,7 @@ async def chat(req: Request):
             "model": OLLAMA_MODEL,
             "prompt": prompt,
             "temperature": 0.1,
-            "max_tokens": 300
+            "max_tokens": 100
         }
     )
 
