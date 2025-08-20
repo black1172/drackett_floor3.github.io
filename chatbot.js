@@ -1,13 +1,4 @@
-let chunks = [];
-
-// Load chunked data from JSON file in your repo
-async function loadChunks() {
-    const res = await fetch('data/chunks.json');
-    chunks = await res.json();
-}
-loadChunks();
-
-// Simple keyword search (replace with vector search if needed)
+    // Simple keyword search (replace with vector search if needed)
 function searchChunks(query) {
     return chunks
         .filter(c => c.text.toLowerCase().includes(query.toLowerCase()))
