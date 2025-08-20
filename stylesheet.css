@@ -620,8 +620,8 @@
 
         .chat-message.bot {
             align-self: flex-start;
-            background: #f1f5f9;
-            color: var(--text-primary, #222);
+            background: #BB0000; /* Ohio State scarlet */
+            color: white;
         }
 
         .chatbox-input-row {
@@ -729,8 +729,8 @@
 
         .chat-message.bot {
             align-self: flex-start;
-            background: #fff;
-            color: #222;
+            background: #BB0000; /* Ohio State scarlet */
+            color: white;
         }
 
         .chatbox-input-row {
@@ -848,19 +848,18 @@
 
         /* Thinking Animation */
         .thinking {
-          display: inline-block;
-          width: 24px;
-          height: 24px;
+          display: inline-flex; /* Use flex to keep dots in a row */
+          align-items: center;
           vertical-align: middle;
         }
         .thinking-dot {
-          display: inline-block;
           width: 6px;
           height: 6px;
           margin: 0 2px;
           background: #888;
           border-radius: 50%;
           animation: blink 1s infinite;
+          display: inline-block;
         }
         .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
         .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
@@ -871,7 +870,7 @@
         }
 
         .bot-message {
-          background: red;
+          background: #BB0000; /* Ohio State scarlet */
           color: white;
           padding: 10px 16px;
           border-radius: 18px;
