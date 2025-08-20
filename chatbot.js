@@ -1,4 +1,4 @@
-    // Simple keyword search (replace with vector search if needed)
+// Simple keyword search (replace with vector search if needed)
 function searchChunks(query) {
     return chunks
         .filter(c => c.text.toLowerCase().includes(query.toLowerCase()))
@@ -9,50 +9,76 @@ const BACKEND_URL = "https://coleman-senior-scope-advertiser.trycloudflare.com/c
 
 // Send message to AI
 async function sendMessage() {
-    const inputElem = document.getElementById("chat-input");
-    const input = inputElem.value.trim();
-    if (!input) return;
+    const input = document.getElementById("chatInput");
+    const chatBox = document.getElementById("chatBox");
+    const userText = input.value.trim();
+    if (!userText) return;
 
-    displayMessage("You", input);
-    inputElem.value = ""; // Clear immediately after sending
+    displayMessage("user", userText);
 
-    // If you use chunks, add them here; otherwise, just send the message
-    const response = await fetch(BACKEND_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input })
-    });
+    // Show thinking animation
+    const thinkingDiv = document.createElement("div");
+    thinkingDiv.className = "bot-message";
+    thinkingDiv.innerHTML = `
+      <span class="thinking">
+        <span class="thinking-dot"></span>
+        <span class="thinking-dot"></span>
+        <span class="thinking-dot"></span>
+      </span> Thinking...`;
+    chatBox.appendChild(thinkingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-    const data = await response.json();
-    let botReply = "";
+    input.value = "";
 
-    if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
-        botReply = data.choices[0].message.content;
-    } else if (data.response) {
-        botReply = data.response;
-    } else {
-        botReply = "Sorry, I couldn't get a response from the AI.";
+    try {
+        const res = await fetch(BACKEND_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userText })
+        });
+        const data = await res.json();
+
+        // Remove thinking animation
+        chatBox.removeChild(thinkingDiv);
+
+        displayMessage("bot", data.response || "Sorry, no response.");
+    } catch (err) {
+        chatBox.removeChild(thinkingDiv);
+        displayMessage("bot", "Error connecting to server.");
     }
-
-    displayMessage("Bot", botReply);
 }
 
 // Improved displayMessage for iMessage-style UI
 function displayMessage(sender, text) {
-    const chatMessages = document.getElementById("chat-messages");
-    const msg = document.createElement("div");
-    msg.classList.add("chat-message");
-    msg.classList.add(sender === "You" ? "user" : "bot");
-    msg.innerHTML = text;
-    chatMessages.appendChild(msg);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    const chatBox = document.getElementById("chatBox");
+    const messageDiv = document.createElement("div");
+    messageDiv.className = sender === "bot" ? "bot-message" : "user-message";
+    messageDiv.textContent = text;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Check backend status
+async function checkBackendStatus() {
+    const chatBox = document.getElementById("chatBox");
+    // Remove any existing messages
+    chatBox.innerHTML = "";
+
+    try {
+        const res = await fetch(BACKEND_URL.replace("/chat", "/"), { method: "GET" });
+        if (res.ok) {
+            displayMessage("bot", "👋 Hi! I'm your RA Assistant. How can I help you today?");
+        } else {
+            displayMessage("bot", "Chatbot is currently down. Please try again later.");
+        }
+    } catch {
+        displayMessage("bot", "Chatbot is currently down. Please try again later.");
+    }
 }
 
 // Event listeners for send button and Enter key
 window.addEventListener("DOMContentLoaded", function() {
-    // Welcome message
-    displayMessage("Bot", "👋 Hi! I'm your RA Assistant. How can I help you today?");
-    
+    checkBackendStatus();
     document.getElementById("chat-send").addEventListener("click", function(e) {
         e.preventDefault();
         sendMessage();

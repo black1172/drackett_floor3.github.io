@@ -845,3 +845,31 @@
         main.container {
             margin-top: 0px; /* Adjust this value to match your header height */
         }
+
+        /* Thinking Animation */
+        .thinking {
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          vertical-align: middle;
+        }
+        .thinking-dot {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          margin: 0 2px;
+          background: #888;
+          border-radius: 50%;
+          animation: blink 1s infinite;
+        }
+        .thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+        .thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 1; }
+        }
+
+        .bot-message {
+          color: red;
+        }
