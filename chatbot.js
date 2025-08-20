@@ -9,7 +9,7 @@ const BACKEND_URL = "https://serial-controlled-throat-tools.trycloudflare.com/ch
 
 // Send message to AI
 async function sendMessage() {
-    const input = document.getElementById("chatInput");
+    const input = document.getElementById("chat-input");
     const chatBox = document.getElementById("chat-messages");
     const userText = input.value.trim();
     if (!userText) return;
