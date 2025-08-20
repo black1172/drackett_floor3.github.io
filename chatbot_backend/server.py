@@ -23,11 +23,13 @@ if os.path.exists(CHUNKS_PATH):
         chunks = json.load(f)
 
 def retrieve_chunks(query):
-    # Return top 3 relevant chunks based on keyword match
-    return [
-        c["text"] for c in chunks
-        if query.lower() in c["text"].lower()
-    ][:3]
+    query_words = set(query.lower().split())
+    results = []
+    for c in chunks:
+        chunk_words = set(c["text"].lower().split())
+        if query_words & chunk_words:
+            results.append(c["text"])
+    return results[:3]
 
 @app.post("/chat")
 async def chat(req: Request):
@@ -78,6 +80,8 @@ async def chat(req: Request):
         f"User: {user_message}\n"
         f"Context from RA resources:\n{context}\n\n"
     )
+
+    print("Context sent to model:", context)
 
     response = requests.post(
         "http://localhost:11434/api/generate",
