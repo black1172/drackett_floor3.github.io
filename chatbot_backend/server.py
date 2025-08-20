@@ -47,6 +47,7 @@ async def chat(req: Request):
         "Format your answers clearly using short paragraphs and lists. "
         "Always remind users to consult a real RA for important decisions. "
         "Your role is to validate feelings and provide resources."
+        "Be concise and avoid unnecessary filler. Only respond with relevant information."
     )
     prompt = (
         f"{system_prompt}\n\n"
@@ -59,7 +60,7 @@ async def chat(req: Request):
         json={
             "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "temperature": 0.3,
+            "temperature": 0.1,
             "max_tokens": 300
         }
     )
