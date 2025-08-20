@@ -45,6 +45,8 @@ async def chat(req: Request):
         "Be concise and avoid unnecessary filler. "
         "If the user's message is generic, such as 'test', 'hello', or not a real question, reply simply and briefly (e.g., 'Hey there!' or 'Hello!'). "
         "Only provide detailed information or resources when the user asks a specific question."
+        "Please use new lines, chunk responses for readability."
+        "DO NOT USE ASTERIKS '*"
     )
     prompt = (
         f"{system_prompt}\n\n"
