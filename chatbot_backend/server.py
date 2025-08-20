@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 import json
+import os
 
 app = FastAPI()
 
@@ -13,15 +14,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_MODEL = "mistral"
+OLLAMA_MODEL = "llama3"
+
+CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data", "chunks.json")
+chunks = []
+if os.path.exists(CHUNKS_PATH):
+    with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
+        chunks = json.load(f)
+
+def retrieve_chunks(query):
+    # Return top 3 relevant chunks based on keyword match
+    return [
+        c["text"] for c in chunks
+        if query.lower() in c["text"].lower()
+    ][:3]
 
 @app.post("/chat")
 async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
 
-    # No chunk retrieval; context is empty or generic
-    context = "No relevant context found."
+    relevant_chunks = retrieve_chunks(user_message)
+    context = "\n\n".join(relevant_chunks) if relevant_chunks else "No relevant context found."
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
@@ -48,7 +62,6 @@ async def chat(req: Request):
         }
     )
 
-    # Collect all 'response' fields from each JSON line
     full_response = ""
     for line in response.iter_lines():
         if line:

@@ -1,10 +1,3 @@
-// Simple keyword search (replace with vector search if needed)
-function searchChunks(query) {
-    return chunks
-        .filter(c => c.text.toLowerCase().includes(query.toLowerCase()))
-        .slice(0, 3); // top 3 matches
-}
-
 const BACKEND_URL = "https://serial-controlled-throat-tools.trycloudflare.com/chat";
 
 // Send message to AI
