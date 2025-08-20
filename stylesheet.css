@@ -871,5 +871,24 @@
         }
 
         .bot-message {
-          color: red;
+          background: red;
+          color: white;
+          padding: 10px 16px;
+          border-radius: 18px;
+          margin: 8px 0;
+          max-width: 70%;
+          align-self: flex-start;
+          display: inline-block;
+        }
+
+        .user-message {
+          background: white;
+          color: black;
+          padding: 10px 16px;
+          border-radius: 18px;
+          margin: 8px 0;
+          max-width: 70%;
+          align-self: flex-end;
+          display: inline-block;
+          border: 1px solid #ddd;
         }
