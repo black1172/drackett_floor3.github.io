@@ -17,7 +17,7 @@ app.add_middleware(
 OLLAMA_MODEL = "mistral"
 
 # Load chunks.json once at startup
-CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data/chunks.json")
+CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data\chunks.json")
 with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
     chunks = json.load(f)
 
