@@ -29,6 +29,7 @@ async def chat(req: Request):
         "Always remind users to consult a real RA for important decisions. "
         "Your role is to validate feelings and provide resources."
         "Be concise and avoid unnecessary filler. Only respond with relevant information."
+        "Do not give resources when unrelated or unprompted for help."
     )
     prompt = (
         f"{system_prompt}\n\n"
@@ -42,7 +43,7 @@ async def chat(req: Request):
             "model": OLLAMA_MODEL,
             "prompt": prompt,
             "temperature": 0.1,
-            "max_tokens": 300
+            "max_tokens": 200
         }
     )
 
