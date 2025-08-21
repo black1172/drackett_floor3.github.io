@@ -5929,6 +5929,18 @@
     "text": " Columbus campus, with the\nspring commencement being the largest ceremony. Regional campuses also\nhold commencement, though not every semester.\n\nLearn more about commencement\n\nCommittee on Academic Misconduct (COAM)\n\nA review panel that investigates cases of misconduct range from deliberate\nacts of cheating to unintended missteps. They decide whether or not a\nviolation has occurred, and if the panel finds there has been an offense,\ndetermine an appropriate penalty.\n\nLearn more about COAM\n\nConvocation\n\nConvocation is the official welcome to Ohio State for new students on the\nMonday of Welcome Week. Students hear from the president and top\nadministrators, experience their first academic procession, and learn some of\nthe history and traditions of Ohio State.\n\nLearn more about convocation\n\nDegree Audit\n\nOne of the most important tools students and advisors use in degree\nplanning is the degree audit, which also includes the Transfer Credit Report.\nA student can use Buckeye Link to run a degree audit, which provides an\nevaluation of how all the courses they have completed are used to meet both\ngeneral and major area course requirements.\n\nLearn more about the degree audit\n\nDistance Education/Distance Learning\n\nA method of studying in which lectures are broadcast or classes are\nconducted by correspondence or over the Internet, without the student’s\nneeding to phyiscally attend a school or college. This could be a single course\ntaken during the course of regular study at Ohio State or a completely online\ndegree program.\n\nDouble Majors/Dual Degree\n\nA program of study that allows a student to complete the course\nrequirements for two majors or two degrees at the same time. Contact your\nadvisor to discuss these options, as different colleges have different\nrequirements and rules.\n\nElective\n\nA class you can take that is not specifically required by your major or minor.\n\nFree Application for Federal Student Aid (FAFSA)\n\nThe almost universal application for financial aid, including loans, grants,\ncollege work-study and other federal and state programs. It is often required\nbefore a student can be considered for scholarships.\n\nLearn more about FAFSA\n\nFamily Educational Rights and Privacy Act of 1974 (FERPA)\n\nThis act sets forth requirements designed to protect the"
   },
   {
+    "id":"test_data",
+    "title": "tester",
+    "source": "developer_input",
+    "tags":[
+      "test",
+      "testing",
+      "this is a test"
+    ],
+    "date": "2025-08-21",
+    "text": "This is a test"
+  },
+  {
     "id": "C:/Users/jenin/OneDrive/Documents/GitHub/Data_Chunker_Python/raw_pdfs\\University_Terms.pdf_4",
     "title": "C:/Users/Jenin/Onedrive/Documents/Github/Data Chunker Python/Raw Pdfs\\University Terms.Pdf",
     "source": "C:/Users/jenin/OneDrive/Documents/GitHub/Data_Chunker_Python/raw_pdfs\\University_Terms.pdf",
