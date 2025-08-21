@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 import json
 import os
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
 
 app = FastAPI()
 
@@ -22,13 +27,21 @@ if os.path.exists(CHUNKS_PATH):
     with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
         chunks = json.load(f)
 
+def filter_query_words(query):
+    words = query.lower().split()
+    filtered = [w for w in words if w not in stop_words and len(w) > 2]
+    return filtered
+
 def retrieve_chunks(query):
     query_words = set(query.lower().split())
     results = []
     for c in chunks:
-        chunk_tags = set(tag.lower() for tag in c.get("tags", []))
-        # Include chunk if any query word matches any tag
-        if query_words & chunk_tags:
+        chunk_tags = [tag.lower() for tag in c.get("tags", [])]
+        # Include chunk if any query word is a substring of any tag, or vice versa
+        if any(
+            any(q in tag or tag in q for tag in chunk_tags)
+            for q in query_words
+        ):
             results.append(c["text"])
     return results[:3]
 
