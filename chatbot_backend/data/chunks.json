@@ -1,4 +1,245 @@
 [
+  [
+  {
+    "id": "osu_safety_1",
+    "title": "Suicide Prevention Program – The Ohio State University",
+    "source": "https://suicideprevention.osu.edu",
+    "tags": ["Wellness", "osu", "suicide_prevention", "mental_health", "crisis", "support", "resources", "2025"],
+    "date": "2025-08-21",
+    "text": "OSU’s Suicide Prevention Program offers peer-to-peer support, crisis resources, and awareness training to help prevent suicide on campus."
+  },
+  {
+    "id": "general_safety_1",
+    "title": "988 Suicide & Crisis Lifeline",
+    "source": "https://988lifeline.org",
+    "tags": ["Wellness", "suicide_prevention", "mental_health", "support", "crisis", "national", "hotline", "2025"],
+    "date": "2025-08-21",
+    "text": "The 988 Lifeline provides free and confidential emotional support 24/7 for people in suicidal crisis or emotional distress."
+  },
+  {
+    "id": "osu_parking_1",
+    "title": "CampusParc – Ohio State Parking",
+    "source": "https://osu.campusparc.com",
+    "tags": ["Campus_Life", "osu", "parking", "transport", "permits", "maps", "services", "2025"],
+    "date": "2025-08-21",
+    "text": "CampusParc manages all OSU parking operations, including permit purchasing, parking maps, garages, and transportation updates."
+  },
+  {
+    "id": "osu_drackett_1",
+    "title": "Drackett Tower – Common Questions",
+    "source": "https://housing.osu.edu/residences/drackett-tower",
+    "tags": ["Campus_Life", "osu", "housing", "drackett", "faq", "residence_hall", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Common student questions: Where is Drackett Tower located? Does it have air conditioning? What are room layouts like? What dining options are nearby? What laundry facilities are available?"
+  },
+  {
+    "id": "osu_firstyear_1",
+    "title": "First-Year Resident Resources",
+    "source": "https://housing.osu.edu/resources/first-year",
+    "tags": ["Campus_Life", "osu", "housing", "first_year", "residents", "faq", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Resources for first-year residents: move-in instructions, packing guides, housing contracts, roommate expectations, dining plans, and community standards."
+  },
+  {
+    "id": "osu_firstyear_2",
+    "title": "First-Year Experience (FYE) – Ohio State",
+    "source": "https://fye.osu.edu",
+    "tags": ["Engagement", "osu", "first_year", "orientation", "support", "resources", "edu", "2025"],
+    "date": "2025-08-21",
+    "text": "The First-Year Experience program supports new students with orientation, transition events, and peer mentoring to ease adjustment to Ohio State."
+  },
+  {
+    "id": "osu_wellness_1",
+    "title": "Student Wellness Center",
+    "source": "https://swc.osu.edu",
+    "tags": ["Wellness", "edu", "osu", "health", "support", "coaching", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Wellness coaching, nutrition education, mental health, financial literacy, substance use prevention, and relationship wellness."
+  },
+  {
+    "id": "osu_wellness_2",
+    "title": "Counseling and Consultation Services",
+    "source": "https://ccs.osu.edu",
+    "tags": ["Wellness", "mental_health", "counseling", "osu", "support", "edu", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides counseling, crisis intervention, and mental health support services for Ohio State students."
+  },
+  {
+    "id": "osu_wellness_3",
+    "title": "Monda Student Resource Center",
+    "source": "https://msrc.osu.edu",
+    "tags": ["Wellness", "Campus_Life", "support", "basic_needs", "food", "housing", "financial", "2025"],
+    "date": "2025-08-21",
+    "text": "Essential needs support including food pantry, clothing closet, emergency housing, financial aid, and parenting resources."
+  },
+  {
+    "id": "osu_academics_1",
+    "title": "Dennis Learning Center",
+    "source": "https://dennislearningcenter.osu.edu",
+    "tags": ["Academics", "coaching", "tutoring", "study_skills", "osu", "edu", "support", "2025"],
+    "date": "2025-08-21",
+    "text": "Offers free academic coaching, tutoring, workshops, and courses focused on study strategies."
+  },
+  {
+    "id": "osu_academics_2",
+    "title": "University Exploration",
+    "source": "https://exploration.osu.edu",
+    "tags": ["Academics", "undeclared", "osu", "advising", "planning", "edu", "majors", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides advising, academic planning, and support for students exploring or changing majors."
+  },
+  {
+    "id": "osu_academics_3",
+    "title": "Online Student Resources",
+    "source": "https://online.osu.edu/discover-us/student-resources",
+    "tags": ["Academics", "osu", "remote", "online", "support", "advising", "tutoring", "2025"],
+    "date": "2025-08-21",
+    "text": "Comprehensive academic and student support for online learners including advising, tutoring, and writing support."
+  },
+  {
+    "id": "osu_career_1",
+    "title": "Buckeye Careers",
+    "source": "https://studentlife.osu.edu/about/student-life-departments",
+    "tags": ["Career", "osu", "development", "jobs", "networking", "employers", "professional", "2025"],
+    "date": "2025-08-21",
+    "text": "Career coaching, employer networking, and professional development for Ohio State students."
+  },
+  {
+    "id": "osu_career_2",
+    "title": "Reid Family Career Closet",
+    "source": "https://msrc.osu.edu/services/reid-family-career-closet",
+    "tags": ["Career", "osu", "clothing", "support", "interviews", "professional", "resources", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides free professional clothing for students preparing for interviews, job fairs, and networking events."
+  },
+  {
+    "id": "osu_engagement_1",
+    "title": "Office of Student Life",
+    "source": "https://studentlife.osu.edu",
+    "tags": ["Engagement", "Campus_Life", "osu", "leadership", "orgs", "events", "support", "2025"],
+    "date": "2025-08-21",
+    "text": "Central hub for student life including residence education, involvement, and leadership development."
+  },
+  {
+    "id": "osu_engagement_2",
+    "title": "Student Activities & Civic Engagement",
+    "source": "https://studentlife.osu.edu/holistic-student-support-and-well-being",
+    "tags": ["Engagement", "osu", "student_orgs", "events", "civic", "activities", "edu", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides involvement opportunities through student organizations, civic engagement, and major campus events."
+  },
+  {
+    "id": "osu_engagement_3",
+    "title": "Service Opportunities (Pay It Forward, MLK Day of Service)",
+    "source": "https://kind.osu.edu/get-involved/student-life-service-opportunities",
+    "tags": ["Engagement", "osu", "service", "community", "outreach", "volunteer", "edu", "2025"],
+    "date": "2025-08-21",
+    "text": "Volunteer opportunities including Pay It Forward, Community Commitment, MLK Day of Service, and Spring Into Service."
+  },
+  {
+    "id": "osu_campus_1",
+    "title": "Housing and Residence Education",
+    "source": "https://housing.osu.edu",
+    "tags": ["Campus_Life", "osu", "housing", "residence", "edu", "students", "resources", "2025"],
+    "date": "2025-08-21",
+    "text": "On-campus housing resources, residence halls, and support for student living."
+  },
+  {
+    "id": "osu_campus_2",
+    "title": "Dining Services",
+    "source": "https://dining.osu.edu",
+    "tags": ["Campus_Life", "osu", "dining", "food", "meal_plans", "edu", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Meal plans, dining halls, and campus food services for Ohio State students."
+  },
+  {
+    "id": "osu_campus_3",
+    "title": "BuckID Services",
+    "source": "https://buckid.osu.edu",
+    "tags": ["Campus_Life", "osu", "id_card", "access", "services", "edu", "students", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides student ID cards for access, dining, campus purchases, and services."
+  },
+  {
+    "id": "osu_campus_4",
+    "title": "Campus Area Bus Service (CABS)",
+    "source": "https://ttm.osu.edu/cabs",
+    "tags": ["Campus_Life", "osu", "transport", "bus", "transit", "edu", "services", "2025"],
+    "date": "2025-08-21",
+    "text": "Free campus bus system serving Ohio State’s main campus and surrounding areas."
+  },
+  {
+    "id": "osu_media_1",
+    "title": "The Lantern",
+    "source": "https://www.thelantern.com",
+    "tags": ["Media_and_Traditions", "osu", "news", "student_media", "independent", "edu", "newspaper", "2025"],
+    "date": "2025-08-21",
+    "text": "Ohio State’s student-run independent newspaper with campus news and multimedia."
+  },
+  {
+    "id": "osu_media_2",
+    "title": "AROUSE OSU",
+    "source": "https://en.wikipedia.org/wiki/AROUSE_OSU",
+    "tags": ["Media_and_Traditions", "osu", "radio", "student_media", "music", "culture", "edu", "2025"],
+    "date": "2025-08-21",
+    "text": "Student-run internet radio station broadcasting music and culture content."
+  },
+  {
+    "id": "osu_media_3",
+    "title": "Block O",
+    "source": "https://en.wikipedia.org/wiki/Block_O",
+    "tags": ["Media_and_Traditions", "osu", "sports", "spirit", "cheering", "student_org", "traditions", "2025"],
+    "date": "2025-08-21",
+    "text": "Largest student organization and official athletic cheering section at Ohio State."
+  },
+  {
+    "id": "osu_media_4",
+    "title": "Ohio Union",
+    "source": "https://ohiounion.osu.edu",
+    "tags": ["Media_and_Traditions", "Campus_Life", "osu", "student_center", "events", "orgs", "services", "2025"],
+    "date": "2025-08-21",
+    "text": "Student activity center and hub for organizations, events, and campus traditions."
+  },
+  {
+    "id": "osu_research_1",
+    "title": "Center for the Study of Student Life (CSSL)",
+    "source": "https://cssl.osu.edu",
+    "tags": ["Research_and_Data", "osu", "student_life", "surveys", "data", "research", "edu", "2025"],
+    "date": "2025-08-21",
+    "text": "Research center producing surveys and reports on Ohio State student experiences and outcomes."
+  },
+  {
+    "id": "osu_research_2",
+    "title": "Buckeye Insights",
+    "source": "https://cssl.osu.edu/buckeye-insights",
+    "tags": ["Research_and_Data", "osu", "feedback", "survey", "students", "edu", "data", "2025"],
+    "date": "2025-08-21",
+    "text": "Platform for students to share feedback and participate in ongoing research studies."
+  },
+  {
+    "id": "osu_family_1",
+    "title": "Parent and Family Relations",
+    "source": "https://parent.osu.edu/resources",
+    "tags": ["Family_and_Graduate", "osu", "parents", "resources", "support", "edu", "family", "2025"],
+    "date": "2025-08-21",
+    "text": "Supports parents and families with resources including tuition, financial aid, and wellness services."
+  },
+  {
+    "id": "osu_family_2",
+    "title": "Graduate & Professional Student Support",
+    "source": "https://studentlife.osu.edu/articles/your-student-life-support-for-graduate-and-professional-students",
+    "tags": ["Family_and_Graduate", "osu", "graduate", "professional", "support", "edu", "resources", "2025"],
+    "date": "2025-08-21",
+    "text": "Provides support resources tailored for graduate and professional students at Ohio State."
+  },
+  {
+    "id": "osu_family_3",
+    "title": "College of Medicine – Student Resources",
+    "source": "https://medicine.osu.edu/student-resources",
+    "tags": ["Family_and_Graduate", "osu", "medicine", "edu", "support", "students", "academic", "2025"],
+    "date": "2025-08-21",
+    "text": "Specialized support for College of Medicine students including academic and wellness resources."
+  },
   {
     "id": "C:/Users/jenin/OneDrive/Documents/GitHub/Data_Chunker_Python/raw_pdfs\\Abroad_Funding.pdf_0",
     "title": "C:/Users/Jenin/Onedrive/Documents/Github/Data Chunker Python/Raw Pdfs\\Abroad Funding.Pdf",
