@@ -45,9 +45,9 @@ async def chat(req: Request):
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
-        "Always use relevant information from the provided context (from RA resources in the chunks JSON file) to answer questions. "
-        "Format your answers clearly using short paragraphs and bullet-point lists when appropriate. "
-        "Keep responses concise and easy to read."
+        "Only use information found in the provided context below to answer questions. "
+        "If the context does not contain the answer, reply with 'I'm sorry, I don't have information about that.' "
+        "Do not invent or guess information. Do not mention resources or organizations unless they appear in the context."
     )
     # Add previous messages to the prompt
     prompt = (
@@ -64,7 +64,7 @@ async def chat(req: Request):
             "model": OLLAMA_MODEL,
             "prompt": prompt,
             "temperature": 0.1,
-            "max_tokens": 50
+            "max_tokens": 30
         }
     )
 
