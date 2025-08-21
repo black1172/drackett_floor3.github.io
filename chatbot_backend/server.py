@@ -26,8 +26,11 @@ def retrieve_chunks(query):
     query_words = set(query.lower().split())
     results = []
     for c in chunks:
-        chunk_words = set(c["text"].lower().split())
-        if query_words & chunk_words:
+        # Combine text and tags for matching
+        chunk_text = c.get("text", "").lower()
+        chunk_tags = " ".join(c.get("tags", [])).lower()
+        chunk_content = f"{chunk_text} {chunk_tags}"
+        if query_words & set(chunk_content.split()):
             results.append(c["text"])
     return results[:3]
 
@@ -75,6 +78,7 @@ async def chat(req: Request):
                 continue
 
     print("Ollama full response:", full_response)
+    print("\nOllama Context:", context)
 
     if full_response:
         return {"response": full_response}
