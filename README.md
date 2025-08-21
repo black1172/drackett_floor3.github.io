@@ -76,5 +76,5 @@ This project addresses a critical challenge for first-year students: navigating 
 
 Explore my related projects and source code on GitHub:
 
-- [Drackett Floor 3 RA Chatbot (Backend)](https://github.com/black1172/drackett_floor3.github.io/chatbot_backend)
+- [Drackett Floor 3 RA Chatbot (Backend)](https://github.com/black1172/drackett_floor3.github.io) then navigate to thhe chatbot_backend folder
 - [OSU Data Chunker (Resource Chunk Extraction)](https://github.com/black1172/Data_Chunker_Python)
