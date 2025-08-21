@@ -26,12 +26,10 @@ def retrieve_chunks(query):
     query_words = set(query.lower().split())
     results = []
     for c in chunks:
-        chunk_text = c.get("text", "").lower()
-        chunk_tags = " ".join(c.get("tags", [])).lower()
-        chunk_words = set(chunk_text.split()) | set(chunk_tags.split())
-        if query_words & chunk_words:
+        chunk_tags = set(tag.lower() for tag in c.get("tags", []))
+        # Only match if all query words are in tags
+        if query_words <= chunk_tags:
             results.append(c["text"])
-    print("Matched chunks:", results)  # Debug
     return results[:3]
 
 @app.post("/chat")
