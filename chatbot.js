@@ -1,6 +1,8 @@
 const BACKEND_URL = "https://serial-controlled-throat-tools.trycloudflare.com/chat";
 
 let history = "";
+let lastUser = "";
+let lastBot = "";
 
 // Send message to AI
 async function sendMessage() {
@@ -9,7 +11,7 @@ async function sendMessage() {
     const userText = input.value.trim();
     if (!userText) return;
 
-    history += `User: ${userText}\n`;
+    lastUser = `User: ${userText}`;
 
     displayMessage("user", userText);
 
@@ -31,14 +33,14 @@ async function sendMessage() {
         const res = await fetch(BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: userText, history })
+            body: JSON.stringify({ message: userText, history: `${lastUser}\n${lastBot}` })
         });
         const data = await res.json();
 
         // Remove thinking animation
         chatBox.removeChild(thinkingDiv);
 
-        history += `Bot: ${data.response}\n`;
+        lastBot = `Bot: ${data.response}`;
 
         displayMessage("bot", data.response || "Sorry, no response.");
     } catch (err) {
