@@ -23,14 +23,13 @@ if os.path.exists(CHUNKS_PATH):
         chunks = json.load(f)
 
 def retrieve_chunks(query):
-    query_words = set(query.lower().split())
+    query_lower = query.lower().strip()
     results = []
     for c in chunks:
-        # Combine text and tags for matching
         chunk_text = c.get("text", "").lower()
         chunk_tags = " ".join(c.get("tags", [])).lower()
-        chunk_content = f"{chunk_text} {chunk_tags}"
-        if query_words & set(chunk_content.split()):
+        # Match if the query is a substring of text or tags
+        if query_lower in chunk_text or query_lower in chunk_tags:
             results.append(c["text"])
     return results[:3]
 
@@ -63,8 +62,8 @@ async def chat(req: Request):
         json={
             "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "temperature": 0.1,
-            "max_tokens": 30
+            "temperature": 0.5,
+            "max_tokens": 50
         }
     )
 
