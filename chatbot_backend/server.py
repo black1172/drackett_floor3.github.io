@@ -27,8 +27,8 @@ def retrieve_chunks(query):
     results = []
     for c in chunks:
         chunk_tags = set(tag.lower() for tag in c.get("tags", []))
-        # Only match if all query words are in tags
-        if query_words <= chunk_tags:
+        # Include chunk if any query word matches any tag
+        if query_words & chunk_tags:
             results.append(c["text"])
     return results[:3]
 
