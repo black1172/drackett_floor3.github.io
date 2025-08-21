@@ -37,18 +37,23 @@ def retrieve_chunks(query):
 async def chat(req: Request):
     body = await req.json()
     user_message = body.get("message", "")
-    history = body.get("history", "")  # <-- Get history from frontend
+    history = body.get("history", "")  # Only previous exchanges
 
+    # Context is only from chunks
     relevant_chunks = retrieve_chunks(user_message)
-    context = "\n\n".join(relevant_chunks) if relevant_chunks else "No relevant context found."
+    context = "\n\n".join(relevant_chunks) if relevant_chunks else (
+        "I don't have specific details on that, but you can find general information about Ohio State University at www.osu.edu."
+    )
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
         "Only use information found in the provided context below to answer questions. "
         "If the context does not contain the answer, reply with 'I'm sorry, I don't have information about that.' "
-        "Do not invent or guess information. Do not mention resources or organizations unless they appear in the context."
+        "Do not greet and explain role."
+        "For general information about Ohio State refer to the official website: www.osu.edu. "
+        "OSU, osu, ohio state, are all synonyms for The Ohio State University."
     )
-    # Add previous messages to the prompt
+
     prompt = (
         f"{system_prompt}\n\n"
         f"Conversation history (most recent first):\n"
