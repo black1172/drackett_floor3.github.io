@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://serial-controlled-throat-tools.trycloudflare.com/chat";
+const BACKEND_URL = "https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/chat";
 
 let history = "";
 let lastUser = "";
