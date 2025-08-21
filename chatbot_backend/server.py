@@ -46,11 +46,9 @@ async def chat(req: Request):
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
-        "Only use information found in the provided context below to answer questions. "
-        "If the context does not contain the answer, reply with 'I'm sorry, I don't have information about that.' "
-        "Do not greet and explain role."
-        "For general information about Ohio State refer to the official website: www.osu.edu. "
-        "OSU, osu, ohio state, are all synonyms for The Ohio State University."
+        "Use the information found in the provided context below to answer questions as best you can. "
+        "If the context does not contain the answer, reply with helpful general information about Ohio State University or direct the user to www.osu.edu."
+        "Do not invent information not found in the context."
     )
 
     prompt = (
