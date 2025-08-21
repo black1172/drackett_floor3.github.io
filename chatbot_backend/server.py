@@ -33,17 +33,17 @@ def filter_query_words(query):
     return filtered
 
 def retrieve_chunks(query):
-    query_words = set(query.lower().split())
+    query_words = set(filter_query_words(query))
     results = []
     for c in chunks:
         chunk_tags = [tag.lower() for tag in c.get("tags", [])]
-        # Include chunk if any query word is a substring of any tag, or vice versa
+        # Only match substrings if query word is at least 4 characters
         if any(
-            any(q in tag or tag in q for tag in chunk_tags)
+            any((len(q) > 3 and (q in tag or tag in q)) or q == tag for tag in chunk_tags)
             for q in query_words
         ):
             results.append(c["text"])
-    return results[:3]
+    return results[:5]
 
 @app.post("/chat")
 async def chat(req: Request):
@@ -99,6 +99,7 @@ async def chat(req: Request):
 
     print("Ollama full response:", full_response)
     print("\nOllama Context:", context)
+    print("Matched chunk tags:", [c.get("tags", []) for c in chunks if any(any(q in tag or tag in q for tag in [tag.lower() for tag in c.get("tags", [])]) for q in filter_query_words(user_message))])
 
     if full_response:
         return {"response": full_response}
