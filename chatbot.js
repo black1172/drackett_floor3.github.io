@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/chat";
+const BACKEND_URL = "https://quebec-metric-point-mobiles.trycloudflare.com ";
 
 let history = "";
 let lastUser = "";
