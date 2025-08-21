@@ -46,9 +46,11 @@ async def chat(req: Request):
 
     system_prompt = (
         "You are a helpful RA Assistant for Drackett Tower Floor 3. "
-        "Use the information found in the provided context below to answer questions as best you can. "
-        "If the context does not contain the answer, reply with helpful general information about Ohio State University or direct the user to www.osu.edu."
-        "Do not invent information not found in the context."
+        "Use the information found in the provided context to answer questions as best you can. "
+        "If the context does not contain the answer, reply with helpful general information about Ohio State University or refer to floor RA's or www.osu.edu."
+        "Do not greet user upon every response."
+        "For floor (3) event and newsletter questions refer to the sections available on the website."
+        "Your main purpose is to connect users to relevant resources."
     )
 
     prompt = (
@@ -64,7 +66,7 @@ async def chat(req: Request):
         json={
             "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "temperature": 0.5,
+            "temperature": 0.2,
             "max_tokens": 50
         }
     )
