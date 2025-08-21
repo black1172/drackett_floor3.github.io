@@ -1,4 +1,12 @@
 [
+    {
+    "id": "test123",
+    "title": "Test Chunk",
+    "source": "manual",
+    "tags": ["test", "unique"],
+    "date": "2025-08-21",
+    "text": "This is a test chunk for chatbot troubleshooting."
+  },
   {
     "id": "C:/Users/jenin/OneDrive/Documents/GitHub/Data_Chunker_Python/raw_pdfs\\Abroad_Funding.pdf_0",
     "title": "C:/Users/Jenin/Onedrive/Documents/Github/Data Chunker Python/Raw Pdfs\\Abroad Funding.Pdf",

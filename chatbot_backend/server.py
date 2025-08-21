@@ -23,14 +23,15 @@ if os.path.exists(CHUNKS_PATH):
         chunks = json.load(f)
 
 def retrieve_chunks(query):
-    query_lower = query.lower().strip()
+    query_words = set(query.lower().split())
     results = []
     for c in chunks:
         chunk_text = c.get("text", "").lower()
         chunk_tags = " ".join(c.get("tags", [])).lower()
-        # Match if the query is a substring of text or tags
-        if query_lower in chunk_text or query_lower in chunk_tags:
+        chunk_words = set(chunk_text.split()) | set(chunk_tags.split())
+        if query_words & chunk_words:
             results.append(c["text"])
+    print("Matched chunks:", results)  # Debug
     return results[:3]
 
 @app.post("/chat")
