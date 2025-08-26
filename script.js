@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += "<tr>";
             for (let day = 0; day < 7; day++) {
                 const dateObj = new Date(d); // clone to avoid mutation
-                const dateStr = dateObj.toISOString().slice(0, 10);
+                const dateStr = toLocalDateString(dateObj);
                 let isPast = dateObj < new Date().setHours(0, 0, 0, 0);
                 let booked = reservations[dateStr] || {};
                 let isFull = Object.keys(booked).length === 24; // All hours booked
@@ -276,6 +276,14 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 });
+
+function toLocalDateString(dateObj) {
+    // Returns YYYY-MM-DD in local time
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 document.getElementById('bugForm').addEventListener('submit', async function(e) {
     e.preventDefault();
