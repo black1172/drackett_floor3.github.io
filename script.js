@@ -124,8 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (isPast || isFull) {
                     btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
                 }
+                // Button text is just the day number
                 html += `<td style="padding:8px;">
-                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${formatDateWords(dateObj)}</button>
+                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
                 </td>`;
                 d.setDate(d.getDate() + 1);
             }
