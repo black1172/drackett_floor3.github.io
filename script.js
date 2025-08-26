@@ -67,6 +67,22 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('studyRoomReservations', JSON.stringify(reservations));
     }
 
+    // Helper to format date as "Month Day" (e.g., August 25th)
+    function formatDateWords(dateObj) {
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const day = dateObj.getDate();
+        const month = months[dateObj.getMonth()];
+        // Add ordinal suffix
+        const suffix = (day === 1 || day === 21 || day === 31) ? "st"
+            : (day === 2 || day === 22) ? "nd"
+            : (day === 3 || day === 23) ? "rd"
+            : "th";
+        return `${month} ${day}${suffix}`;
+    }
+
     // Render a calendar for the current week and 3 weeks after (total 4 weeks) with days of the week as columns
     function renderCalendar() {
         const now = new Date();
@@ -84,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         let html = `<div style="text-align:center; margin-bottom:16px;">
-            <strong>Book a Study Room: ${weekStart.toLocaleDateString()} – ${endDate.toLocaleDateString()}</strong>
+            <strong>Book The Study Room: ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}</strong>
         </div>`;
 
         html += `<table style="width:100%; border-collapse:collapse; text-align:center;">
@@ -109,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
                 }
                 html += `<td style="padding:8px;">
-                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
+                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${formatDateWords(dateObj)}</button>
                 </td>`;
                 d.setDate(d.getDate() + 1);
             }
@@ -159,8 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return `${hour}:00 ${suffix}`;
         }
 
+        // Use formatDateWords for display
         let html = `<div style="text-align:center;">
-            <h3 style="color:var(--osu-red);">Reservations for ${dateStr}</h3>
+            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
             <div style="margin-bottom:12px;">
                 ${bookedTimes.length ? bookedTimes.map(t => `<div style="color:#b71c1c;">${t}</div>`).join('') : '<span style="color:#888;">No reservations yet.</span>'}
             </div>
