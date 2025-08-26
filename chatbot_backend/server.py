@@ -1,10 +1,13 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import requests
 import json
 import os
 import nltk
 from nltk.corpus import stopwords
+import smtplib
+from email.message import EmailMessage
 
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
@@ -105,6 +108,25 @@ async def chat(req: Request):
         return {"response": full_response}
     else:
         return {"response": "Sorry, I couldn't get a response from the AI."}
+
+@app.post("/report-bug")
+async def report_bug(request: Request):
+    data = await request.json()
+    desc = data.get("description", "")
+    user_email = data.get("user_email", "")
+    msg = EmailMessage()
+    msg["Subject"] = "Bug Report from Drackett Floor 3 Website"
+    msg["From"] = "yourserveremail@osu.edu"
+    msg["To"] = "black.1172@buckeyemail.osu.edu"
+    msg.set_content(f"Description:\n{desc}\n\nUser Email: {user_email}")
+
+    # Send email (configure SMTP for your server)
+    with smtplib.SMTP("smtp.yourprovider.com", 587) as smtp:
+        smtp.starttls()
+        smtp.login("yourserveremail@osu.edu", "yourpassword")
+        smtp.send_message(msg)
+
+    return JSONResponse({"success": True})
 
 @app.get("/")
 async def root():

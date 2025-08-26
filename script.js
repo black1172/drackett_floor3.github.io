@@ -276,3 +276,19 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 });
+
+document.getElementById('bugForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const desc = document.getElementById('bug-description').value.trim();
+    const userEmail = document.getElementById('bug-email').value.trim();
+    const res = await fetch('/report-bug', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description: desc, user_email: userEmail })
+    });
+    if (res.ok) {
+        document.getElementById('bugFormMsg').textContent = "Thank you! Your bug report has been submitted.";
+    } else {
+        document.getElementById('bugFormMsg').textContent = "Error submitting bug report. Please try again.";
+    }
+});
