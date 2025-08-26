@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         let html = `<div style="text-align:center; margin-bottom:16px;">
-            <span style="font-size:2rem; color:#b71c1c; font-weight:700;">Book The Study Room:</span>
+            <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
             <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
                 ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
             </span>
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         html += `<table style="width:100%; border-collapse:collapse; text-align:center;">
             <thead>
-                <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#b71c1c;">${day}</th>`).join('')}</tr>
+                <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
             </thead>
             <tbody>`;
 
@@ -123,9 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 let booked = reservations[dateStr] || {};
                 let isFull = Object.keys(booked).length === 24; // All hours booked
 
-                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#b71c1c; font-weight:600; cursor:pointer;";
+                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
                 if (isPast || isFull) {
-                    btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
+                    btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
                 }
                 // Button text is just the day number
                 html += `<td style="padding:8px;">
