@@ -57,7 +57,6 @@ window.addEventListener('load', function () {
 // Improved Study Room Reservation System
 document.addEventListener('DOMContentLoaded', function() {
     const calendarContainer = document.getElementById('calendar-container');
-    const reservationsList = document.getElementById('reservations-list');
 
     // Helper to get reservations from localStorage
     function getReservations() {
@@ -114,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Generate 4 weeks (rows)
         let d = new Date(weekStart);
+        let todayStr = now.toISOString().slice(0, 10);
+        let todayBtn = null;
         for (let week = 0; week < 4; week++) {
             html += "<tr>";
             for (let day = 0; day < 7; day++) {
@@ -127,7 +128,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (isPast || isFull) {
                     btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
                 }
-                // Button text is just the day number
+                // Highlight today's button
+                if (dateStr === todayStr) {
+                    btnStyle += "box-shadow:0 0 0 3px #e2183644;";
+                }
                 html += `<td style="padding:8px;">
                     <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
                 </td>`;
@@ -138,6 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
         html += `</tbody></table>
         <div id="selected-date-view" style="margin-top:24px;"></div>`;
         calendarContainer.innerHTML = html;
+
+        // Automatically show reservation form for today
+        showReservationForm(todayStr);
     }
     renderCalendar();
 
@@ -268,23 +275,4 @@ document.addEventListener('DOMContentLoaded', function() {
             renderCalendar(); // Refresh calendar to update full days
         };
     }
-
-    // Optionally, show today's reservations in the daily list
-    function renderDailyReservations() {
-        const today = new Date().toISOString().slice(0,10);
-        const reservations = getReservations();
-        reservationsList.innerHTML = "";
-        if (reservations[today]) {
-            Object.entries(reservations[today]).forEach(([slot, user]) => {
-                const [start, end] = slot.split('-');
-                const timeStr = `${start}:00 - ${end}:00`;
-                const li = document.createElement('li');
-                li.textContent = `${timeStr}: ${user}`;
-                reservationsList.appendChild(li);
-            });
-        } else {
-            reservationsList.innerHTML = "<li>No reservations for today.</li>";
-        }
-    }
-    renderDailyReservations();
 });
