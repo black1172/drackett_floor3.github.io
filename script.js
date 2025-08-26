@@ -67,23 +67,31 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('studyRoomReservations', JSON.stringify(reservations));
     }
 
-    // Render a simple calendar for day selection (current month) with reserved/past days in red
+    // Render a calendar for the current week and 3 weeks after (total 4 weeks)
     function renderCalendar() {
         const now = new Date();
-        const year = now.getFullYear();
-        const month = now.getMonth();
-        const todayStr = now.toISOString().slice(0,10);
-        const lastDay = new Date(year, month + 1, 0);
         const reservations = getReservations();
 
+        // Find start of current week (Sunday)
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay());
+
+        // Calculate end date (3 weeks after current week, so 28 days total)
+        const endDate = new Date(weekStart);
+        endDate.setDate(weekStart.getDate() + 27);
+
         let html = `<div style="text-align:center; margin-bottom:16px;">
-            <strong>${now.toLocaleString('default', { month: 'long' })} ${year}</strong>
+            <strong>Book a Study Room: ${weekStart.toLocaleDateString()} – ${endDate.toLocaleDateString()}</strong>
         </div><div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">`;
 
-        for (let d = 1; d <= lastDay.getDate(); d++) {
-            const dateObj = new Date(year, month, d);
-            const dateStr = dateObj.toISOString().slice(0,10);
-            let isPast = dateObj < now.setHours(0,0,0,0);
+        for (
+            let d = new Date(weekStart);
+            d <= endDate;
+            d.setDate(d.getDate() + 1)
+        ) {
+            const dateObj = new Date(d); // clone to avoid mutation
+            const dateStr = dateObj.toISOString().slice(0, 10);
+            let isPast = dateObj < new Date().setHours(0, 0, 0, 0);
             let booked = reservations[dateStr] || {};
             let isFull = Object.keys(booked).length === 24; // All hours booked
 
@@ -91,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (isPast || isFull) {
                 btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
             }
-            html += `<button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${d}</button>`;
+            html += `<button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>`;
         }
         html += `</div>
         <div id="selected-date-view" style="margin-top:24px;"></div>`;
