@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('studyRoomReservations', JSON.stringify(reservations));
     }
 
-    // Render a calendar for the current week and 3 weeks after (total 4 weeks)
+    // Render a calendar for the current week and 3 weeks after (total 4 weeks) with days of the week as columns
     function renderCalendar() {
         const now = new Date();
         const reservations = getReservations();
@@ -80,28 +80,42 @@ document.addEventListener('DOMContentLoaded', function() {
         const endDate = new Date(weekStart);
         endDate.setDate(weekStart.getDate() + 27);
 
+        // Days of week labels
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
         let html = `<div style="text-align:center; margin-bottom:16px;">
             <strong>Book a Study Room: ${weekStart.toLocaleDateString()} – ${endDate.toLocaleDateString()}</strong>
-        </div><div style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">`;
+        </div>`;
 
-        for (
-            let d = new Date(weekStart);
-            d <= endDate;
-            d.setDate(d.getDate() + 1)
-        ) {
-            const dateObj = new Date(d); // clone to avoid mutation
-            const dateStr = dateObj.toISOString().slice(0, 10);
-            let isPast = dateObj < new Date().setHours(0, 0, 0, 0);
-            let booked = reservations[dateStr] || {};
-            let isFull = Object.keys(booked).length === 24; // All hours booked
+        html += `<table style="width:100%; border-collapse:collapse; text-align:center;">
+            <thead>
+                <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#b71c1c;">${day}</th>`).join('')}</tr>
+            </thead>
+            <tbody>`;
 
-            let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#b71c1c; font-weight:600; cursor:pointer;";
-            if (isPast || isFull) {
-                btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
+        // Generate 4 weeks (rows)
+        let d = new Date(weekStart);
+        for (let week = 0; week < 4; week++) {
+            html += "<tr>";
+            for (let day = 0; day < 7; day++) {
+                const dateObj = new Date(d); // clone to avoid mutation
+                const dateStr = dateObj.toISOString().slice(0, 10);
+                let isPast = dateObj < new Date().setHours(0, 0, 0, 0);
+                let booked = reservations[dateStr] || {};
+                let isFull = Object.keys(booked).length === 24; // All hours booked
+
+                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#b71c1c; font-weight:600; cursor:pointer;";
+                if (isPast || isFull) {
+                    btnStyle += "background:#ffeaea; color:#b71c1c; border:2px solid #b71c1c; cursor:not-allowed;";
+                }
+                html += `<td style="padding:8px;">
+                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
+                </td>`;
+                d.setDate(d.getDate() + 1);
             }
-            html += `<button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>`;
+            html += "</tr>";
         }
-        html += `</div>
+        html += `</tbody></table>
         <div id="selected-date-view" style="margin-top:24px;"></div>`;
         calendarContainer.innerHTML = html;
     }
