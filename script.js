@@ -100,7 +100,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
         let html = `<div style="text-align:center; margin-bottom:16px;">
-            <strong>Book The Study Room: ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}</strong>
+            <span style="font-size:2rem; color:#b71c1c; font-weight:700;">Book The Study Room:</span>
+            <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
+                ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
+            </span>
         </div>`;
 
         html += `<table style="width:100%; border-collapse:collapse; text-align:center;">
