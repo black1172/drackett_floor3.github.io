@@ -153,16 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function showReservationForm(dateStr) {
         const reservations = getReservations();
         const booked = reservations[dateStr] || {};
-        let bookedTimes = Object.entries(booked).map(([slot, user]) => {
-            const [start, end] = slot.split('-');
-            return `${formatHour(start)} - ${formatHour(end)} (${user})`;
-        });
 
         // Generate dropdown options for hours (12-hour format), hide booked times
         function hourOptions(selected, isStart) {
             let opts = "";
             for (let h = 0; h < 24; h++) {
-                // If any slot for this hour is booked, skip
                 if (booked[`${h}-${h+1}`]) continue;
                 let label = formatHour(h);
                 opts += `<option value="${h}"${selected == h ? " selected" : ""}>${label}</option>`;
@@ -181,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Render reservation timeline for the day
         function renderDayTimeline(dateStr, booked) {
-            // Container for timeline
             let timelineHtml = `<div style="margin:24px auto 12px auto; max-width:700px;">
                 <div style="font-weight:600; margin-bottom:8px; color:#222;">Reservation Timeline</div>
                 <div style="display:flex; align-items:center; height:38px; border-radius:8px; background:#f3f3f3; overflow:hidden; border:1px solid #ddd;">`;
@@ -222,9 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let html = `<div style="text-align:center;">
             <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
             ${renderDayTimeline(dateStr, booked)}
-            <div style="margin-bottom:12px;">
-                ${bookedTimes.length ? bookedTimes.map(t => `<div style="color:#b71c1c;">${t}</div>`).join('') : '<span style="color:#888;">No reservations yet.</span>'}
-            </div>
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
                     Start Time:
