@@ -437,16 +437,17 @@
     </form>
 </section>
 
-<script>
-document.getElementById('bugForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const desc = document.getElementById('bug-description').value.trim();
-    const userEmail = document.getElementById('bug-email').value.trim();
-    const mailto = `mailto:black.1172@buckeyemail.osu.edu?subject=Bug%20Report%20from%20Drackett%20Floor%203%20Website&body=${encodeURIComponent(desc + (userEmail ? "\n\nUser Email: " + userEmail : ""))}`;
-    window.location.href = mailto;
-    document.getElementById('bugFormMsg').textContent = "Thank you! Your email client should open to send the bug report.";
-});
-</script>
+<div style="max-width:320px; margin:24px auto; background:#fff3f3; border:1px solid #e21836; border-radius:12px; box-shadow:0 2px 8px rgba(226,24,54,0.07); padding:18px 20px; text-align:center;">
+    <div style="font-weight:700; color:#e21836; font-size:1.1rem; margin-bottom:8px;">
+        See something wrong?
+    </div>
+    <div style="color:#b71c1c; font-size:0.97rem; margin-bottom:12px;">
+        Help me improve! If you spot a bug or error, let me know.
+    </div>
+    <a href="#bug-report" style="display:inline-block; background:#e21836; color:#fff; font-weight:600; border-radius:8px; padding:8px 20px; text-decoration:none; box-shadow:0 1px 4px rgba(226,24,54,0.08);">
+        Report a Bug
+    </a>
+</div>
 
     <footer>
         <div class="container">
