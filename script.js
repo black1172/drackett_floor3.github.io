@@ -179,9 +179,49 @@ document.addEventListener('DOMContentLoaded', function() {
             return `${hour}:00 ${suffix}`;
         }
 
+        // Render reservation timeline for the day
+        function renderDayTimeline(dateStr, booked) {
+            // Container for timeline
+            let timelineHtml = `<div style="margin:24px auto 12px auto; max-width:700px;">
+                <div style="font-weight:600; margin-bottom:8px; color:#222;">Reservation Timeline</div>
+                <div style="display:flex; align-items:center; height:38px; border-radius:8px; background:#f3f3f3; overflow:hidden; border:1px solid #ddd;">`;
+
+            for (let hour = 0; hour < 24; hour++) {
+                const slotKey = `${hour}-${hour+1}`;
+                const isBooked = booked[slotKey];
+                timelineHtml += `<div title="${isBooked ? isBooked : 'Available'}"
+                    style="
+                        flex:1;
+                        height:100%;
+                        background:${isBooked ? '#e21836' : '#b7e4c7'};
+                        color:${isBooked ? '#fff' : '#222'};
+                        font-size:0.85rem;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        border-right:${hour < 23 ? '1px solid #fff' : 'none'};
+                        cursor:default;
+                        position:relative;
+                    ">
+                    ${isBooked ? `<span style="font-size:0.8rem;">${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'am' : 'pm'}<br>${isBooked}</span>` : ''}
+                </div>`;
+            }
+            timelineHtml += `</div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-top:4px; color:#888;">
+                    <span>12am</span>
+                    <span>6am</span>
+                    <span>12pm</span>
+                    <span>6pm</span>
+                    <span>12am</span>
+                </div>
+            </div>`;
+            return timelineHtml;
+        }
+
         // Use formatDateWords for display
         let html = `<div style="text-align:center;">
             <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
+            ${renderDayTimeline(dateStr, booked)}
             <div style="margin-bottom:12px;">
                 ${bookedTimes.length ? bookedTimes.map(t => `<div style="color:#b71c1c;">${t}</div>`).join('') : '<span style="color:#888;">No reservations yet.</span>'}
             </div>
