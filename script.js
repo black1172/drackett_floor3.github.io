@@ -57,6 +57,7 @@ window.addEventListener('load', function () {
 // Improved Study Room Reservation System
 document.addEventListener('DOMContentLoaded', function() {
     const calendarContainer = document.getElementById('calendar-container');
+    let selectedDateStr = toLocalDateString(new Date()); // Track selected date
 
     // Helper to get reservations from localStorage
     function getReservations() {
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
-        const day = dateObj.getDate();
+        const day = dateObj.getDate() + 1;
         const month = months[dateObj.getMonth()];
         // Add ordinal suffix
         const suffix = (day === 1 || day === 21 || day === 31) ? "st"
@@ -105,22 +106,23 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
         </div>`;
 
-        html += `<table style="width:100%; border-collapse:collapse; text-align:center;">
-            <thead>
-                <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
-            </thead>
-            <tbody>`;
+        // Make calendar horizontally scrollable on mobile
+        html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
+        html += `<thead>
+            <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
+        </thead>
+        <tbody>`;
 
         // Generate 4 weeks (rows)
         let d = new Date(weekStart);
-        let todayStr = now.toISOString().slice(0, 10);
-        let todayBtn = null;
         for (let week = 0; week < 4; week++) {
             html += "<tr>";
             for (let day = 0; day < 7; day++) {
                 const dateObj = new Date(d); // clone to avoid mutation
                 const dateStr = toLocalDateString(dateObj);
-                let isPast = dateObj < new Date().setHours(0, 0, 0, 0);
+                let todayMidnight = new Date();
+                todayMidnight.setHours(0, 0, 0, 0);
+                let isPast = dateObj < todayMidnight;
                 let booked = reservations[dateStr] || {};
                 let isFull = Object.keys(booked).length === 24; // All hours booked
 
@@ -128,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (isPast || isFull) {
                     btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
                 }
-                // Highlight today's button
-                if (dateStr === todayStr) {
+                // Highlight selected button
+                if (dateStr === selectedDateStr) {
                     btnStyle += "box-shadow:0 0 0 3px #e2183644;";
                 }
                 html += `<td style="padding:8px;">
@@ -139,12 +141,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             html += "</tr>";
         }
-        html += `</tbody></table>
+        html += `</tbody></table></div>
         <div id="selected-date-view" style="margin-top:24px;"></div>`;
         calendarContainer.innerHTML = html;
 
-        // Automatically show reservation form for today
-        showReservationForm(todayStr);
+        // Show reservation form for selected date
+        showReservationForm(selectedDateStr);
     }
     renderCalendar();
 
@@ -152,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
     calendarContainer.addEventListener('click', function(e) {
         if (e.target.classList.contains('calendar-day-btn')) {
             const selectedDate = e.target.getAttribute('data-date');
-            showReservationForm(selectedDate);
+            selectedDateStr = selectedDate; // Update selected date
+            renderCalendar(); // Re-render calendar with new highlight
         }
     });
 
