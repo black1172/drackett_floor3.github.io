@@ -121,9 +121,9 @@ async def report_bug(request: Request):
     msg.set_content(f"Description:\n{desc}\n\nUser Email: {user_email}")
 
     # Send email (configure SMTP for your server)
-    with smtplib.SMTP("smtp.yourprovider.com", 587) as smtp:
+    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         smtp.starttls()
-        smtp.login("yourserveremail@osu.edu", "yourpassword")
+        smtp.login("yourgmail@gmail.com", "your-app-password")
         smtp.send_message(msg)
 
     return JSONResponse({"success": True})

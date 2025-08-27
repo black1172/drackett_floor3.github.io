@@ -297,9 +297,16 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
     });
+    const msgDiv = document.getElementById('bugFormMsg');
     if (res.ok) {
-        document.getElementById('bugFormMsg').textContent = "Thank you! Your bug report has been submitted.";
+        msgDiv.textContent = "Thank you! Your bug report has been submitted.";
+        msgDiv.style.color = "#228B22"; // green
+        msgDiv.style.background = "#eafbe7";
+        msgDiv.style.padding = "8px";
+        msgDiv.style.borderRadius = "6px";
     } else {
-        document.getElementById('bugFormMsg').textContent = "Error submitting bug report. Please try again.";
+        msgDiv.textContent = "Error submitting bug report. Please try again.";
+        msgDiv.style.color = "#b71c1c";
+        msgDiv.style.background = "#fff3f3";
     }
 });
