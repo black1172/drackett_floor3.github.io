@@ -280,6 +280,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+async function fetchReservations() {
+    const res = await fetch("https://your-backend-url/reservations");
+    if (res.ok) {
+        return await res.json();
+    }
+    return {};
+}
+
 function toLocalDateString(dateObj) {
     // Returns YYYY-MM-DD in local time
     const year = dateObj.getFullYear();
@@ -310,3 +318,12 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         msgDiv.style.background = "#fff3f3";
     }
 });
+
+async function addReservation(date, start, end, user) {
+    const res = await fetch("https://your-backend-url/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, start, end, user })
+    });
+    return await res.json();
+}
