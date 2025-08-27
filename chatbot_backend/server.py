@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import requests
@@ -29,6 +29,8 @@ chunks = []
 if os.path.exists(CHUNKS_PATH):
     with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
         chunks = json.load(f)
+
+RESERVATIONS_PATH = os.path.join(os.path.dirname(__file__), "data", "reservations.json")
 
 def filter_query_words(query):
     words = query.lower().split()
@@ -131,3 +133,39 @@ async def report_bug(request: Request):
 @app.get("/")
 async def root():
     return {"message": "RA Chatbot backend is running."}
+
+def load_reservations():
+    if os.path.exists(RESERVATIONS_PATH):
+        with open(RESERVATIONS_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_reservations(reservations):
+    with open(RESERVATIONS_PATH, "w", encoding="utf-8") as f:
+        json.dump(reservations, f, indent=2)
+
+@app.get("/reservations")
+async def get_reservations():
+    return load_reservations()
+
+@app.post("/reservations")
+async def add_reservation(
+    date: str = Body(...),
+    start: int = Body(...),
+    end: int = Body(...),
+    user: str = Body(...)
+):
+    reservations = load_reservations()
+    if date not in reservations:
+        reservations[date] = {}
+    # Check for conflicts
+    for hour in range(start, end):
+        slot = f"{hour}-{hour+1}"
+        if slot in reservations[date]:
+            return JSONResponse({"success": False, "error": f"Time slot {slot} already booked."}, status_code=400)
+    # Book slots
+    for hour in range(start, end):
+        slot = f"{hour}-{hour+1}"
+        reservations[date][slot] = user
+    save_reservations(reservations)
+    return JSONResponse({"success": True})
