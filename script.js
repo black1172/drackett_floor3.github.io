@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Use formatDateWords for display
         let html = `<div style="text-align:center;">
-            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
+            <h3 style="color:var(--osu-red);">Reservations for ${dateStr} </h3>
             ${renderDayTimeline(dateStr, booked)}
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
