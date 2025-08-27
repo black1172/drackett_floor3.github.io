@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
-        const day = dateObj.getDate() + 1;
+        const day = dateObj.getDate();
         const month = months[dateObj.getMonth()];
         // Add ordinal suffix
         const suffix = (day === 1 || day === 21 || day === 31) ? "st"

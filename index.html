@@ -437,14 +437,27 @@
     </form>
 </section>
 
-<div style="max-width:320px; margin:24px auto; background:#fff3f3; border:1px solid #e21836; border-radius:12px; box-shadow:0 2px 8px rgba(226,24,54,0.07); padding:18px 20px; text-align:center;">
-    <div style="font-weight:700; color:#e21836; font-size:1.1rem; margin-bottom:8px;">
-        See something wrong?
+<div id="bug-sidebar" style="
+    position: fixed;
+    top: 340px;
+    left: 12px;
+    width: 160px;
+    background: #fff3f3;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(226,24,54,0.10);
+    z-index: 99;
+    padding: 14px 10px 10px 10px;
+    font-family: 'Outfit', Arial, sans-serif;
+    color: #e21836;
+    transition: background 0.2s;
+    opacity: 0.96;
+    display: none;
+">
+    <h4 style="margin-bottom: 10px; font-size: 1rem; color: #e21836; font-weight: 600; text-align:center;">See something wrong?</h4>
+    <div style="color:#b71c1c; font-size:0.97rem; margin-bottom:12px; text-align:center;">
+        Help us improve!<br>If you spot an issue or error, let me know.
     </div>
-    <div style="color:#b71c1c; font-size:0.97rem; margin-bottom:12px;">
-        Help me improve! If you spot a bug or error, let me know.
-    </div>
-    <a href="#bug-report" style="display:inline-block; background:#e21836; color:#fff; font-weight:600; border-radius:8px; padding:8px 20px; text-decoration:none; box-shadow:0 1px 4px rgba(226,24,54,0.08);">
+    <a href="#bug-report" style="display:inline-block; background:#e21836; color:#fff; font-weight:600; border-radius:8px; padding:8px 20px; text-decoration:none; box-shadow:0 1px 4px rgba(226,24,54,0.08); text-align:center;">
         Report a Bug
     </a>
 </div>
@@ -562,6 +575,17 @@
         window.addEventListener('resize', updateSidebarEvents);
         // Optionally, update every minute in case user leaves page open
         setInterval(updateSidebarEvents, 60000);
+
+        function showBugSidebar() {
+    const bugSidebar = document.getElementById('bug-sidebar');
+    if (window.innerWidth > 900) {
+        bugSidebar.style.display = 'block';
+    } else {
+        bugSidebar.style.display = 'none';
+    }
+}
+window.addEventListener('resize', showBugSidebar);
+window.addEventListener('DOMContentLoaded', showBugSidebar);
     </script>
 </body>
 </html>
