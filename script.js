@@ -67,7 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('studyRoomReservations', JSON.stringify(reservations));
     }
 
-    // Helper to format date as "Month Day" (e.g., August 25th)
+    async function fetchReservations() {
+        // Replace with your backend URL if needed
+        const res = await fetch("/reservations");
+        if (res.ok) return await res.json();
+        return {};
+    }
+
     function formatDateWords(dateObj) {
         const months = [
             "January", "February", "March", "April", "May", "June",
@@ -75,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
         const day = dateObj.getDate();
         const month = months[dateObj.getMonth()];
-        // Add ordinal suffix
         const suffix = (day === 1 || day === 21 || day === 31) ? "st"
             : (day === 2 || day === 22) ? "nd"
             : (day === 3 || day === 23) ? "rd"
@@ -84,70 +89,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Render a calendar for the current week and 3 weeks after (total 4 weeks) with days of the week as columns
-    function renderCalendar() {
-        const now = new Date();
-        const reservations = getReservations();
+    async function renderCalendar() {
+    const calendarContainer = document.getElementById('calendar-container');
+    const reservations = await fetchReservations();
 
-        // Find start of current week (Sunday)
-        const weekStart = new Date(now);
-        weekStart.setDate(now.getDate() - now.getDay());
+    const now = new Date();
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay());
+    const endDate = new Date(weekStart);
+    endDate.setDate(weekStart.getDate() + 27);
 
-        // Calculate end date (3 weeks after current week, so 28 days total)
-        const endDate = new Date(weekStart);
-        endDate.setDate(weekStart.getDate() + 27);
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-        // Days of week labels
-        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let html = `<div style="text-align:center; margin-bottom:16px;">
+        <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
+        <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
+            ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
+        </span>
+    </div>`;
 
-        let html = `<div style="text-align:center; margin-bottom:16px;">
-            <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
-            <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
-                ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
-            </span>
-        </div>`;
+    html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
+    html += `<thead>
+        <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
+    </thead>
+    <tbody>`;
 
-        // Make calendar horizontally scrollable on mobile
-        html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
-        html += `<thead>
-            <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
-        </thead>
-        <tbody>`;
+    let d = new Date(weekStart);
+    for (let week = 0; week < 4; week++) {
+        html += "<tr>";
+        for (let day = 0; day < 7; day++) {
+            const dateObj = new Date(d);
+            const dateStr = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+            let todayMidnight = new Date();
+            todayMidnight.setHours(0, 0, 0, 0);
+            let isPast = dateObj < todayMidnight;
+            let booked = reservations[dateStr] || {};
+            let isFull = Object.keys(booked).length === 24;
 
-        // Generate 4 weeks (rows)
-        let d = new Date(weekStart);
-        for (let week = 0; week < 4; week++) {
-            html += "<tr>";
-            for (let day = 0; day < 7; day++) {
-                const dateObj = new Date(d); // clone to avoid mutation
-                const dateStr = toLocalDateString(dateObj);
-                let todayMidnight = new Date();
-                todayMidnight.setHours(0, 0, 0, 0);
-                let isPast = dateObj < todayMidnight;
-                let booked = reservations[dateStr] || {};
-                let isFull = Object.keys(booked).length === 24; // All hours booked
-
-                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
-                if (isPast || isFull) {
-                    btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
-                }
-                // Highlight selected button
-                if (dateStr === selectedDateStr) {
-                    btnStyle += "box-shadow:0 0 0 3px #e2183644;";
-                }
-                html += `<td style="padding:8px;">
-                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
-                </td>`;
-                d.setDate(d.getDate() + 1);
+            let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
+            if (isPast || isFull) {
+                btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
             }
-            html += "</tr>";
+            html += `<td style="padding:8px;">
+                <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
+            </td>`;
+            d.setDate(d.getDate() + 1);
         }
-        html += `</tbody></table></div>
-        <div id="selected-date-view" style="margin-top:24px;"></div>`;
-        calendarContainer.innerHTML = html;
-
-        // Show reservation form for selected date
-        showReservationForm(selectedDateStr);
+        html += "</tr>";
     }
+    html += `</tbody></table></div>`;
+    calendarContainer.innerHTML = html;
+}
     renderCalendar();
 
     // Handle day selection
@@ -160,8 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Show reservation form for selected day (improved look and dropdowns, hide booked times)
-    function showReservationForm(dateStr) {
-        const reservations = getReservations();
+    async function showReservationForm(dateStr) {
+        const reservations = await fetchReservations();
         const booked = reservations[dateStr] || {};
 
         // Generate dropdown options for hours (12-hour format), hide booked times
@@ -250,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selected-date-view').innerHTML = html;
 
         // Handle reservation submission
-        document.getElementById('reservation-form').onsubmit = function(ev) {
+        document.getElementById('reservation-form').onsubmit = async function(ev) {
             ev.preventDefault();
             const start = parseInt(document.getElementById('start-hour').value);
             const end = parseInt(document.getElementById('end-hour').value);
@@ -260,32 +252,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 msgDiv.textContent = "Invalid time range.";
                 return;
             }
-            // Check for conflicts
-            for (let hour = start; hour < end; hour++) {
-                if (booked[`${hour}-${hour+1}`]) {
-                    msgDiv.textContent = `Time slot ${formatHour(hour)} - ${formatHour(hour+1)} is already booked.`;
-                    return;
-                }
+            // Submit to backend
+            const result = await addReservation(dateStr, start, end, user);
+            if (result.success) {
+                msgDiv.textContent = "Reservation successful!";
+                await showReservationForm(dateStr); // Refresh view with backend data
+                await renderCalendar(); // Refresh calendar
+            } else {
+                msgDiv.textContent = result.error || "Error making reservation.";
             }
-            // Book all slots in range
-            if (!reservations[dateStr]) reservations[dateStr] = {};
-            for (let hour = start; hour < end; hour++) {
-                reservations[dateStr][`${hour}-${hour+1}`] = user;
-            }
-            saveReservations(reservations);
-            msgDiv.textContent = "Reservation successful!";
-            showReservationForm(dateStr); // Refresh view
-            renderCalendar(); // Refresh calendar to update full days
         };
     }
 });
 
-async function fetchReservations() {
-    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations")); // Or your deployed backend URL
-    if (res.ok) {
-        return await res.json();
-    }
-    return {};
+async function addReservation(date, start, end, user) {
+    const res = await fetch("https://pottery-whale-assists-singer.trycloudflare.com/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, start, end, user })
+    });
+    return await res.json();
 }
 
 function toLocalDateString(dateObj) {
@@ -318,12 +304,3 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         msgDiv.style.background = "#fff3f3";
     }
 });
-
-async function addReservation(date, start, end, user) {
-    const res = await fetch("https://pottery-whale-assists-singer.trycloudflare.com/reservations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, start, end, user })
-    });
-    return await res.json();
-}
