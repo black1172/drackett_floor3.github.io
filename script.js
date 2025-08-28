@@ -296,7 +296,7 @@ function toLocalDateString(dateObj) {
     return `${year}-${month}-${day}`;
 }
 
-document.getElementById('bugForm').addEventListener('submit', async function(e) {
+document.getElementById('bug-report').addEventListener('submit', async function(e) {
     e.preventDefault();
     const desc = document.getElementById('bug-description').value.trim();
     const userEmail = document.getElementById('bug-email').value.trim();
