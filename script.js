@@ -320,7 +320,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
 });
 
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://your-backend-url/reservations", {
+    const res = await fetch("https://pottery-whale-assists-singer.trycloudflare.com/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })

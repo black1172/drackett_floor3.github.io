@@ -137,7 +137,14 @@ async def root():
 def load_reservations():
     if os.path.exists(RESERVATIONS_PATH):
         with open(RESERVATIONS_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+            try:
+                data = json.load(f)
+                # If file is empty or not a dict, reset to empty dict
+                if not isinstance(data, dict):
+                    return {}
+                return data
+            except Exception:
+                return {}
     return {}
 
 def save_reservations(reservations):
@@ -156,6 +163,10 @@ async def add_reservation(
     user: str = Body(...)
 ):
     reservations = load_reservations()
+    # Ensure top-level is a dict
+    if not isinstance(reservations, dict):
+        reservations = {}
+    # Each date is a dict of slots
     if date not in reservations:
         reservations[date] = {}
     # Check for conflicts
@@ -168,4 +179,4 @@ async def add_reservation(
         slot = f"{hour}-{hour+1}"
         reservations[date][slot] = user
     save_reservations(reservations)
-    return JSONResponse({"success": True})
+    return JSONResponse({"success": True, "reservations": reservations})
