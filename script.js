@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function fetchReservations() {
-    const res = await fetch("http://localhost:8000/reservations"); // Or your deployed backend URL
+    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations")); // Or your deployed backend URL
     if (res.ok) {
         return await res.json();
     }
