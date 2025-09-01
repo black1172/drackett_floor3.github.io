@@ -128,12 +128,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             html += "</tr>";
         }
-        html += `</tbody></table></div>
-        <div id="selected-date-view" style="margin-top:24px;"></div>`;
-        calendarContainer.innerHTML = html;
+        html += `</tbody></table></div>`;
+calendarContainer.innerHTML = html;
 
-        // Show reservation form for selected date
-        await showReservationForm(selectedDateStr);
+// Show reservation form for selected date
+await showReservationForm(selectedDateStr);
     }
 
     calendarContainer.addEventListener('click', async function(e) {
