@@ -237,35 +237,36 @@
         </section>
 
         <!-- Study Room Scheduling Section (now immediately after RA Contact) -->
-<section id="study-room-scheduler" class="content-section" style="margin-top: 48px;">
-    <h2 class="section-title" style="color: var(--osu-red); text-align: left;">Study Room Scheduling</h2>
-    <div id="calendar-container" style="max-width: 700px; margin: 0 auto;">
-        <!-- Calendar will be rendered here -->
-    </div>
-    <div id="daily-reservations" style="max-width: 700px; margin: 32px auto 0 auto;">
-        <ul id="reservations-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
-            <!-- Reservations will be rendered here -->
-        </ul>
-    </div>
-</section>
+        <section id="study-room-scheduler" class="content-section" style="margin-top: 48px;">
+            <h2 class="section-title" style="color: var(--osu-red); text-align: left;">Study Room Scheduling</h2>
+            <div id="calendar-container" style="max-width: 700px; margin: 0 auto;">
+                <!-- Calendar will be rendered here -->
+            </div>
+            <div id="selected-date-view" style="margin-top:24px;"></div>
+            <div id="daily-reservations" style="max-width: 700px; margin: 32px auto 0 auto;">
+                <ul id="reservations-list" style="list-style: none; padding: 0; margin: 0; text-align: center;">
+                    <!-- Reservations will be rendered here -->
+                </ul>
+            </div>
+        </section>
 
-<!-- Chatbot Section (now right after Study Room Scheduling) -->
-<section id="chatBot" class="content-section">
-    <h2 class="section-title">RA Assistant Chatbot</h2>
-    <div class="chatbox-imessage">
-        <div class="chatbox-header">
-            <span class="chatbox-title">💬 Ask the RA Assistant</span>
-        </div>
-        <div id="chat-messages" class="chatbox-messages"></div>
-        <form class="chatbox-input-row" onsubmit="return false;">
-            <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
-            <button id="chat-send" class="chatbox-send-btn">Send</button>
-        </form>
-    </div>
-    <p style="font-size: 0.95rem; color: #b71c1c; margin-top: 14px; text-align: center;">
-        <strong>Disclaimer:</strong> Chatbot advice may be inaccurate or incomplete. Always consult a Resident Assistant before making medical, safety, or other major decisions.
-    </p>
-</section>
+        <!-- Chatbot Section (now right after Study Room Scheduling) -->
+        <section id="chatBot" class="content-section">
+            <h2 class="section-title">RA Assistant Chatbot</h2>
+            <div class="chatbox-imessage">
+                <div class="chatbox-header">
+                    <span class="chatbox-title">💬 Ask the RA Assistant</span>
+                </div>
+                <div id="chat-messages" class="chatbox-messages"></div>
+                <form class="chatbox-input-row" onsubmit="return false;">
+                    <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" />
+                    <button id="chat-send" class="chatbox-send-btn">Send</button>
+                </form>
+            </div>
+            <p style="font-size: 0.95rem; color: #b71c1c; margin-top: 14px; text-align: center;">
+                <strong>Disclaimer:</strong> Chatbot advice may be inaccurate or incomplete. Always consult a Resident Assistant before making medical, safety, or other major decisions.
+            </p>
+        </section>
 
         <!-- OSU Links Section -->
         <section id="osu-links" class="content-section">
@@ -596,3 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

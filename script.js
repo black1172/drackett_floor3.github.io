@@ -55,21 +55,12 @@ window.addEventListener('load', function () {
 });
 
 // Improved Study Room Reservation System
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const calendarContainer = document.getElementById('calendar-container');
-    let selectedDateStr = toLocalDateString(new Date()); // Track selected date
-
-    // Helper to get reservations from localStorage
-    function getReservations() {
-        return JSON.parse(localStorage.getItem('studyRoomReservations') || '{}');
-    }
-    function saveReservations(reservations) {
-        localStorage.setItem('studyRoomReservations', JSON.stringify(reservations));
-    }
+    let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        // Replace with your backend URL if needed
-        const res = await fetch("/reservations");
+        const res = await fetch("https://satellite-snapshot-mid-novels.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -90,68 +81,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Render a calendar for the current week and 3 weeks after (total 4 weeks) with days of the week as columns
     async function renderCalendar() {
-    const calendarContainer = document.getElementById('calendar-container');
-    const reservations = await fetchReservations();
+        const reservations = await fetchReservations();
+        const now = new Date();
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay());
+        const endDate = new Date(weekStart);
+        endDate.setDate(weekStart.getDate() + 27);
 
-    const now = new Date();
-    const weekStart = new Date(now);
-    weekStart.setDate(now.getDate() - now.getDay());
-    const endDate = new Date(weekStart);
-    endDate.setDate(weekStart.getDate() + 27);
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        let html = `<div style="text-align:center; margin-bottom:16px;">
+            <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
+            <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
+                ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
+            </span>
+        </div>`;
 
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
+        html += `<thead>
+            <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
+        </thead>
+        <tbody>`;
 
-    let html = `<div style="text-align:center; margin-bottom:16px;">
-        <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
-        <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
-            ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
-        </span>
-    </div>`;
+        let d = new Date(weekStart);
+        for (let week = 0; week < 4; week++) {
+            html += "<tr>";
+            for (let day = 0; day < 7; day++) {
+                const dateObj = new Date(d);
+                const dateStr = toLocalDateString(dateObj);
+                let todayMidnight = new Date();
+                todayMidnight.setHours(0, 0, 0, 0);
+                let isPast = dateObj < todayMidnight;
+                let booked = reservations[dateStr] || {};
+                let isFull = Object.keys(booked).length === 24;
 
-    html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
-    html += `<thead>
-        <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
-    </thead>
-    <tbody>`;
-
-    let d = new Date(weekStart);
-    for (let week = 0; week < 4; week++) {
-        html += "<tr>";
-        for (let day = 0; day < 7; day++) {
-            const dateObj = new Date(d);
-            const dateStr = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
-            let todayMidnight = new Date();
-            todayMidnight.setHours(0, 0, 0, 0);
-            let isPast = dateObj < todayMidnight;
-            let booked = reservations[dateStr] || {};
-            let isFull = Object.keys(booked).length === 24;
-
-            let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
-            if (isPast || isFull) {
-                btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
+                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
+                if (isPast || isFull) {
+                    btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
+                }
+                if (dateStr === selectedDateStr) {
+                    btnStyle += "box-shadow:0 0 0 3px #e2183644;";
+                }
+                html += `<td style="padding:8px;">
+                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
+                </td>`;
+                d.setDate(d.getDate() + 1);
             }
-            html += `<td style="padding:8px;">
-                <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
-            </td>`;
-            d.setDate(d.getDate() + 1);
+            html += "</tr>";
         }
-        html += "</tr>";
-    }
-    html += `</tbody></table></div>`;
-    calendarContainer.innerHTML = html;
-}
-    renderCalendar();
+        html += `</tbody></table></div>
+        <div id="selected-date-view" style="margin-top:24px;"></div>`;
+        calendarContainer.innerHTML = html;
 
-    // Handle day selection
-    calendarContainer.addEventListener('click', function(e) {
+        // Show reservation form for selected date
+        await showReservationForm(selectedDateStr);
+    }
+
+    calendarContainer.addEventListener('click', async function(e) {
         if (e.target.classList.contains('calendar-day-btn')) {
-            const selectedDate = e.target.getAttribute('data-date');
-            selectedDateStr = selectedDate; // Update selected date
-            renderCalendar(); // Re-render calendar with new highlight
+            selectedDateStr = e.target.getAttribute('data-date');
+            await renderCalendar();
         }
     });
 
-    // Show reservation form for selected day (improved look and dropdowns, hide booked times)
     async function showReservationForm(dateStr) {
         const reservations = await fetchReservations();
         const booked = reservations[dateStr] || {};
@@ -219,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Use formatDateWords for display
         let html = `<div style="text-align:center;">
-            <h3 style="color:var(--osu-red);">Reservations for ${dateStr} </h3>
+            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
             ${renderDayTimeline(dateStr, booked)}
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
@@ -241,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
         document.getElementById('selected-date-view').innerHTML = html;
 
-        // Handle reservation submission
         document.getElementById('reservation-form').onsubmit = async function(ev) {
             ev.preventDefault();
             const start = parseInt(document.getElementById('start-hour').value);
@@ -252,17 +242,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 msgDiv.textContent = "Invalid time range.";
                 return;
             }
-            // Submit to backend
             const result = await addReservation(dateStr, start, end, user);
             if (result.success) {
                 msgDiv.textContent = "Reservation successful!";
-                await showReservationForm(dateStr); // Refresh view with backend data
-                await renderCalendar(); // Refresh calendar
+                await showReservationForm(dateStr);
+                await renderCalendar();
             } else {
                 msgDiv.textContent = result.error || "Error making reservation.";
             }
         };
     }
+
+    await renderCalendar();
 });
 
 async function addReservation(date, start, end, user) {
@@ -302,5 +293,27 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         msgDiv.textContent = "Error submitting bug report. Please try again.";
         msgDiv.style.color = "#b71c1c";
         msgDiv.style.background = "#fff3f3";
+    }
+});
+
+async function checkBackendStatus() {
+    try {
+        const res = await fetch("https://satellite-snapshot-mid-novels.trycloudflare.com/chat", { method: "POST", body: JSON.stringify({ message: "ping" }), headers: { "Content-Type": "application/json" } });
+        return res.ok;
+    } catch (e) {
+        return false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // ...existing calendar code...
+
+    // Chatbot availability check
+    const chatMessages = document.getElementById('chat-messages');
+    const backendUp = await checkBackendStatus();
+    if (!backendUp && chatMessages) {
+        chatMessages.innerHTML = `<div class="chat-message bot" style="color:#b71c1c; background:#fff3f3; border-radius:8px; margin:12px 0; padding:12px;">
+            <strong>Chatbot unavailable:</strong> The backend server is currently offline. Please try again later.
+        </div>`;
     }
 });

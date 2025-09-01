@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://pottery-whale-assists-singer.trycloudflare.com/chat";
+const BACKEND_URL = "https://satellite-snapshot-mid-novels.trycloudflare.com/chat";
 
 let history = "";
 let lastUser = "";
