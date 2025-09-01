@@ -296,24 +296,12 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     }
 });
 
-async function checkBackendStatus() {
-    try {
-        const res = await fetch("https://satellite-snapshot-mid-novels.trycloudflare.com/chat", { method: "POST", body: JSON.stringify({ message: "ping" }), headers: { "Content-Type": "application/json" } });
-        return res.ok;
-    } catch (e) {
-        return false;
-    }
+// Add reservation to the backend
+async function addReservation(date, start, end, user) {
+    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, start, end, user })
+    });
+    return await res.json();
 }
-
-document.addEventListener('DOMContentLoaded', async function() {
-    // ...existing calendar code...
-
-    // Chatbot availability check
-    const chatMessages = document.getElementById('chat-messages');
-    const backendUp = await checkBackendStatus();
-    if (!backendUp && chatMessages) {
-        chatMessages.innerHTML = `<div class="chat-message bot" style="color:#b71c1c; background:#fff3f3; border-radius:8px; margin:12px 0; padding:12px;">
-            <strong>Chatbot unavailable:</strong> The backend server is currently offline. Please try again later.
-        </div>`;
-    }
-});

@@ -91,16 +91,6 @@ async function fetchReservations() {
     return {};
 }
 
-// Add reservation to the backend
-async function addReservation(date, start, end, user) {
-    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, start, end, user })
-    });
-    return await res.json();
-}
-
 // Event listeners for send button and Enter key
 window.addEventListener("DOMContentLoaded", function() {
     history = "";      // Clear history on page reload
