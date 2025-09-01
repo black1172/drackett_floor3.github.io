@@ -138,13 +138,13 @@ await showReservationForm(selectedDateStr);
     calendarContainer.addEventListener('click', async function(e) {
         if (e.target.classList.contains('calendar-day-btn')) {
             selectedDateStr = e.target.getAttribute('data-date');
-            await renderCalendar();
+            await renderCalendar(); // This will use the updated selectedDateStr
         }
     });
 
-    async function showReservationForm(dateStr) {
+    async function showReservationForm() {
         const reservations = await fetchReservations();
-        const booked = reservations[dateStr] || {};
+        const booked = reservations[selectedDateStr] || {};
 
         // Generate dropdown options for hours (12-hour format), hide booked times
         function hourOptions(selected, isStart) {
@@ -209,8 +209,8 @@ await showReservationForm(selectedDateStr);
 
         // Use formatDateWords for display
         let html = `<div style="text-align:center;">
-            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(dateStr))}</h3>
-            ${renderDayTimeline(dateStr, booked)}
+            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(selectedDateStr))}</h3>
+            ${renderDayTimeline(selectedDateStr, booked)}
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
                     Start Time:
@@ -241,15 +241,68 @@ await showReservationForm(selectedDateStr);
                 msgDiv.textContent = "Invalid time range.";
                 return;
             }
-            const result = await addReservation(dateStr, start, end, user);
+            const result = await addReservation(selectedDateStr, start, end, user);
             if (result.success) {
                 msgDiv.textContent = "Reservation successful!";
-                await showReservationForm(dateStr);
+                await showReservationForm();
                 await renderCalendar();
             } else {
                 msgDiv.textContent = result.error || "Error making reservation.";
             }
         };
+    }
+
+    async function renderCalendar() {
+        const reservations = await fetchReservations();
+        const now = new Date();
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay());
+        const endDate = new Date(weekStart);
+        endDate.setDate(weekStart.getDate() + 27);
+
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        let html = `<div style="text-align:center; margin-bottom:16px;">
+            <span style="font-size:1.5rem; color:#e21836; font-weight:700;">Book The Study Room:</span>
+            <span style="font-size:1.15rem; color:#222; font-weight:500; margin-left:10px;">
+                ${formatDateWords(weekStart)} – ${formatDateWords(endDate)}
+            </span>
+        </div>`;
+
+        html += `<div style="overflow-x:auto; width:100%;"><table style="min-width:420px; width:100%; border-collapse:collapse; text-align:center;">`;
+        html += `<thead>
+            <tr>${daysOfWeek.map(day => `<th style="padding:8px 0; color:#e21836;">${day}</th>`).join('')}</tr>
+        </thead>
+        <tbody>`;
+
+        let d = new Date(weekStart);
+        for (let week = 0; week < 4; week++) {
+            html += "<tr>";
+            for (let day = 0; day < 7; day++) {
+                const dateObj = new Date(d);
+                const dateStr = toLocalDateString(dateObj);
+                let todayMidnight = new Date();
+                todayMidnight.setHours(0, 0, 0, 0);
+                let isPast = dateObj < todayMidnight;
+                let booked = reservations[dateStr] || {};
+                let isFull = Object.keys(booked).length === 24;
+
+                let btnStyle = "width:40px; height:40px; border-radius:50%; border:1px solid #ccc; background:#fff; color:#e21836; font-weight:600; cursor:pointer;";
+                if (isPast || isFull) {
+                    btnStyle += "background:#ffeaea; color:#e21836; border:2px solid #e21836; cursor:not-allowed;";
+                }
+                if (dateStr === selectedDateStr) {
+                    btnStyle += "box-shadow:0 0 0 3px #e2183644;";
+                }
+                html += `<td style="padding:8px;">
+                    <button class="calendar-day-btn" data-date="${dateStr}" style="${btnStyle}" ${isPast || isFull ? "disabled" : ""}>${dateObj.getDate()}</button>
+                </td>`;
+                d.setDate(d.getDate() + 1);
+            }
+            html += "</tr>";
+        }
+        html += `</tbody></table></div>`;
+calendarContainer.innerHTML = html;
+        await showReservationForm(); // Always uses selectedDateStr
     }
 
     await renderCalendar();
