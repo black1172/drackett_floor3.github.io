@@ -79,6 +79,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         return `${month} ${day}${suffix}`;
     }
 
+    // Format date as MM-DD-YYYY
+    function formatDateMMDDYYYY(dateObj) {
+        const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const dd = String(dateObj.getDate()).padStart(2, '0');
+        const yyyy = dateObj.getFullYear();
+        return `${mm}-${dd}-${yyyy}`;
+    }
+
     // Render a calendar for the current week and 3 weeks after (total 4 weeks) with days of the week as columns
     async function renderCalendar() {
         const reservations = await fetchReservations();
@@ -209,7 +217,7 @@ await showReservationForm(selectedDateStr);
 
         // Use formatDateWords for display
         let html = `<div style="text-align:center;">
-            <h3 style="color:var(--osu-red);">Reservations for ${formatDateWords(new Date(selectedDateStr))}</h3>
+            <h3 style="color:var(--osu-red);">Reservations for ${formatDateMMDDYYYY(new Date(selectedDateStr))}</h3>
             ${renderDayTimeline(selectedDateStr, booked)}
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
