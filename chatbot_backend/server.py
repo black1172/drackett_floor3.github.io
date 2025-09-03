@@ -8,6 +8,7 @@ import nltk
 from nltk.corpus import stopwords
 import smtplib
 from email.message import EmailMessage
+import datetime
 
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
@@ -34,6 +35,7 @@ if os.path.exists(CHUNKS_PATH):
         chunks = json.load(f)
 
 RESERVATIONS_PATH = os.path.join(os.path.dirname(__file__), "data", "reservations.json")
+BUGS_PATH = os.path.join(os.path.dirname(__file__), "data", "bugs.json")
 
 def filter_query_words(query):
     words = query.lower().split()
@@ -114,23 +116,38 @@ async def chat(req: Request):
     else:
         return {"response": "Sorry, I couldn't get a response from the AI."}
 
+def save_bug_report(desc, user_email):
+    bug_entry = {
+        "date": datetime.datetime.now().strftime("%Y-%m-%d"),
+        "time": datetime.datetime.now().strftime("%H:%M:%S"),
+        "issue": desc,
+        "email": user_email
+    }
+    # Load existing bugs, handle missing file
+    bugs = []
+    if os.path.exists(BUGS_PATH):
+        try:
+            with open(BUGS_PATH, "r", encoding="utf-8") as f:
+                bugs = json.load(f)
+        except Exception:
+            bugs = []
+    else:
+        # If file doesn't exist, create it with an empty list
+        with open(BUGS_PATH, "w", encoding="utf-8") as f:
+            json.dump([], f)
+        bugs = []
+    # Append new bug
+    bugs.append(bug_entry)
+    # Save back to file
+    with open(BUGS_PATH, "w", encoding="utf-8") as f:
+        json.dump(bugs, f, indent=2)
+
 @app.post("/report-bug")
 async def report_bug(request: Request):
     data = await request.json()
     desc = data.get("description", "")
     user_email = data.get("user_email", "")
-    msg = EmailMessage()
-    msg["Subject"] = "Bug Report from Drackett Floor 3 Website"
-    msg["From"] = "yourserveremail@osu.edu"
-    msg["To"] = "black.1172@buckeyemail.osu.edu"
-    msg.set_content(f"Description:\n{desc}\n\nUser Email: {user_email}")
-
-    # Send email (configure SMTP for your server)
-    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
-        smtp.starttls()
-        smtp.login("yourgmail@gmail.com", "your-app-password")
-        smtp.send_message(msg)
-
+    save_bug_report(desc, user_email)
     return JSONResponse({"success": True})
 
 @app.get("/")
