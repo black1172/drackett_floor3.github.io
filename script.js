@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        const res = await fetch("https://satellite-snapshot-mid-novels.trycloudflare.com/reservations");
+        const res = await fetch("https://outreach-spray-lectures-temporarily.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -309,7 +309,7 @@ calendarContainer.innerHTML = html;
 });
 
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://pottery-whale-assists-singer.trycloudflare.com/reservations", {
+    const res = await fetch("https://outreach-spray-lectures-temporarily.trycloudflare.com/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })
