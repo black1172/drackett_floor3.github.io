@@ -174,14 +174,17 @@ await showReservationForm(selectedDateStr);
             return `${hour}:00 ${suffix}`;
         }
 
-        // Render reservation timeline for the day
+        // Render reservation timeline for the next 12 hours from now
         function renderDayTimeline(dateStr, booked) {
+            const now = new Date();
+            let startHour = now.getHours();
             let timelineHtml = `<div style="margin:24px auto 12px auto; max-width:480px;">
-                <div style="font-weight:600; margin-bottom:8px; color:#222;">Reservation Timeline</div>
+                <div style="font-weight:600; margin-bottom:8px; color:#222;">Reservation Timeline (Next 12 Hours)</div>
                 <div style="overflow-x:auto; width:100%; max-width:480px;">
                     <div style="display:flex; min-width:360px; align-items:center; height:54px; border-radius:8px; background:#f3f3f3; overflow:hidden; border:1px solid #ddd;">`;
 
-            for (let hour = 0; hour < 24; hour++) {
+            for (let i = 0; i < 12; i++) {
+                let hour = (startHour + i) % 24;
                 const slotKey = `${hour}-${hour+1}`;
                 const isBooked = booked[slotKey];
                 timelineHtml += `<div title="${isBooked ? isBooked : 'Available'}"
@@ -196,7 +199,7 @@ await showReservationForm(selectedDateStr);
                         display:flex;
                         align-items:center;
                         justify-content:center;
-                        border-right:${hour < 23 ? '1px solid #fff' : 'none'};
+                        border-right:${i < 11 ? '1px solid #fff' : 'none'};
                         cursor:default;
                         position:relative;
                     ">
@@ -206,11 +209,9 @@ await showReservationForm(selectedDateStr);
             timelineHtml += `</div>
                 </div>
                 <div style="display:flex; justify-content:space-between; font-size:1rem; margin-top:4px; color:#888; min-width:360px;">
-                    <span>12am</span>
-                    <span>6am</span>
-                    <span>12pm</span>
-                    <span>6pm</span>
-                    <span>12am</span>
+                    <span>${startHour % 12 === 0 ? 12 : startHour % 12}${startHour < 12 ? 'am' : 'pm'}</span>
+                    <span>${(startHour + 6) % 24 % 12 === 0 ? 12 : (startHour + 6) % 24 % 12}${(startHour + 6) % 24 < 12 ? 'am' : 'pm'}</span>
+                    <span>${(startHour + 11) % 24 % 12 === 0 ? 12 : (startHour + 11) % 24 % 12}${(startHour + 11) % 24 < 12 ? 'am' : 'pm'}</span>
                 </div>
             </div>`;
             return timelineHtml;
