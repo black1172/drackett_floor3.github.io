@@ -388,20 +388,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventsGrid = document.querySelector('.events-grid');
     if (eventsGrid) {
         const now = new Date();
-        // Loop through each event card and remove if date has passed
+        // Loop through each event card and remove if date has passed or is a monthly event
         eventsGrid.querySelectorAll('.event-card').forEach(card => {
             const dateElem = card.querySelector('.event-date');
             if (dateElem) {
-                // Try to parse the date from the text
                 const dateText = dateElem.textContent.trim();
+                // Remove monthly events like "Sep 2025"
+                if (/^[A-Za-z]{3,} \d{4}$/.test(dateText)) {
+                    card.remove();
+                    return;
+                }
                 // Example formats: "Aug 24, 2025", "Sep 2025", etc.
                 let eventDate;
                 if (/^[A-Za-z]{3,} \d{1,2}, \d{4}$/.test(dateText)) {
                     // Format: "Aug 24, 2025"
                     eventDate = new Date(dateText);
-                } else if (/^[A-Za-z]{3,} \d{4}$/.test(dateText)) {
-                    // Format: "Sep 2025"
-                    eventDate = new Date(`1 ${dateText}`);
                 }
                 if (eventDate && eventDate < now) {
                     card.remove();
