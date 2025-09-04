@@ -500,52 +500,6 @@
             }
         });
 
-        // Event data for sidebar (keep in sync with event cards)
-        const eventsData = [
-            {
-                id: "event-aug24",
-                date: "2025-08-24T20:00:00",
-                label: "Aug 24",
-                title: "First Floor Meeting"
-            },
-            {
-                id: "event-sep",
-                date: "2025-09-15T19:00:00",
-                label: "Sep",
-                title: "Monthly Event"
-            },
-            {
-                id: "event-oct",
-                date: "2025-10-15T19:00:00",
-                label: "Oct",
-                title: "Monthly Event"
-            },
-            {
-                id: "event-nov",
-                date: "2025-11-15T19:00:00",
-                label: "Nov",
-                title: "Monthly Event"
-            },
-            {
-                id: "event-dec",
-                date: "2025-12-15T19:00:00",
-                label: "Dec",
-                title: "Monthly Event"
-            },
-            {
-                id: "event-movie-sep24",
-                date: "2025-09-24T19:00:00", // 7:00 PM movie
-                label: "Sep 24",
-                title: "Pocket Watching – Finance and a Flick"
-            },
-            {
-                id: "event-community-hours-sep",
-                date: "2025-09-20T18:00:00", // Example date/time, update as needed
-                label: "Sep",
-                title: "Community Hours"
-            }
-        ];
-
         // Show sidebar only on desktop
         function showEventsSidebar() {
             const sidebar = document.getElementById('events-sidebar');
@@ -561,16 +515,54 @@
         // Dynamic sidebar event rendering
         function updateSidebarEvents() {
             const now = new Date();
-            // Filter for events in the future
-            const upcoming = eventsData
-                .filter(ev => new Date(ev.date) > now)
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .slice(0, 3);
-
             const sidebarList = document.getElementById('sidebar-events-list');
             sidebarList.innerHTML = "";
 
-            upcoming.forEach(ev => {
+            // Select all event cards currently in the .events-grid
+            const eventCards = document.querySelectorAll('.events-grid .event-card');
+            let upcoming = [];
+            eventCards.forEach(card => {
+                const dateElem = card.querySelector('.event-date');
+                const titleElem = card.querySelector('.event-title');
+                if (dateElem && titleElem) {
+                    const dateText = dateElem.textContent.trim();
+                    // Skip monthly events like "Oct 2025", "Nov 2025", "Dec 2025"
+                    if (/^[A-Za-z]{3,} \d{4}$/.test(dateText)) return;
+                    // Parse date
+                    let eventDate = null;
+                    if (/^[A-Za-z]{3,} \d{1,2}, \d{4}$/.test(dateText)) {
+                        eventDate = new Date(dateText);
+                    }
+                    // If eventDate is valid and in the future, add it
+                    if (eventDate && eventDate > now) {
+                        upcoming.push({
+                            id: card.id,
+                            label: dateText,
+                            title: titleElem.textContent.trim(),
+                            date: eventDate
+                        });
+                    }
+                    // If date is "TBD" or contains "TBD", add it as a special case
+                    else if (/TBD/i.test(dateText)) {
+                        upcoming.push({
+                            id: card.id,
+                            label: dateText,
+                            title: titleElem.textContent.trim(),
+                            date: null // No sorting by date
+                        });
+                    }
+                }
+            });
+
+            // Sort by date, but keep TBD events at the end
+            upcoming.sort((a, b) => {
+                if (!a.date && b.date) return 1;
+                if (a.date && !b.date) return -1;
+                if (!a.date && !b.date) return 0;
+                return a.date - b.date;
+            });
+
+            upcoming.slice(0, 3).forEach(ev => {
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <a href="#${ev.id}" style="text-decoration: none; color: var(--text-primary); display: block; padding: 6px 0; border-radius: 6px; transition: background 0.15s;">
