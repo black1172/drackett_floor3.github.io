@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_MODEL = "llama3:8b"
+OLLAMA_MODEL = "phi3"
 
 CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data", "chunks.json")
 chunks = []
