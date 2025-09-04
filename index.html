@@ -454,25 +454,25 @@
 
 <div id="bug-sidebar" style="
     position: fixed;
-    top: 340px;
-    left: 12px;
-    width: 160px;
+    top: 320px; /* Move up so it doesn't overlap events sidebar */
+    left: 180px; /* Move right so it doesn't overlap events sidebar */
+    width: 120px; /* Make sidebar smaller */
     background: #fff3f3;
     border-radius: 14px;
     box-shadow: 0 2px 12px rgba(226,24,54,0.10);
     z-index: 99;
-    padding: 14px 10px 10px 10px;
+    padding: 10px 8px 8px 8px;
     font-family: 'Outfit', Arial, sans-serif;
     color: #e21836;
     transition: background 0.2s;
     opacity: 0.96;
     display: none;
 ">
-    <h4 style="margin-bottom: 10px; font-size: 1rem; color: #e21836; font-weight: 600; text-align:center;">See something wrong?</h4>
-    <div style="color:#b71c1c; font-size:0.97rem; margin-bottom:12px; text-align:center;">
-        Help us improve!<br>If you spot an issue or error, let me know.
+    <h4 style="margin-bottom: 8px; font-size: 0.95rem; color: #e21836; font-weight: 600; text-align:center;">See something wrong?</h4>
+    <div style="color:#b71c1c; font-size:0.90rem; margin-bottom:10px; text-align:center;">
+        Help RA Wyatt improve!<br>If you spot an issue or error, let me know.
     </div>
-    <a href="#bug-report" style="display:inline-block; background:#e21836; color:#fff; font-weight:600; border-radius:8px; padding:8px 20px; text-decoration:none; box-shadow:0 1px 4px rgba(226,24,54,0.08); text-align:center;">
+    <a href="#bug-report" style="display:inline-block; background:#e21836; color:#fff; font-weight:600; border-radius:8px; padding:6px 10px; text-decoration:none; box-shadow:0 1px 4px rgba(226,24,54,0.08); text-align:center; font-size:0.95rem;">
         Report a Bug
     </a>
 </div>
