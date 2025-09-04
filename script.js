@@ -176,7 +176,7 @@ await showReservationForm(selectedDateStr);
 
         // Render reservation timeline for the full 24 hours
         function renderDayTimeline(dateStr, booked) {
-            // Build the timeline bar for 24 hours, with axis labels but only 24 slot squares (no labels inside slots)
+            // Build the timeline bar for 24 hours, with axis labels but only 24 slot squares (no numbers inside slots)
             let timelineHtml = `<div style="margin:24px auto 12px auto; max-width:700px;">
                 <div style="overflow-x:auto; width:100%; max-width:700px;">
                     <div style="display:flex; min-width:720px; align-items:center; height:54px; border-radius:8px; background:#f3f3f3; overflow:hidden; border:1px solid #ddd;">`;
