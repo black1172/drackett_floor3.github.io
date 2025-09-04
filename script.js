@@ -224,18 +224,20 @@ await showReservationForm(selectedDateStr);
             <form id="reservation-form" style="display:inline-block; background:#f6f6f6; padding:18px 24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
                 <label style="margin-right:12px;">
                     Start Time:
-                    <select id="start-hour" style="padding:6px 10px; border-radius:6px; border:1px solid #ccc; margin-left:4px;">
+                    <select id="start-hour" style="padding:10px 18px; border-radius:6px; border:1px solid #ccc; margin-left:4px; font-size:1.25rem; min-width:120px; max-height:120px; overflow-y:auto;">
                         ${hourOptions(8, true)}
                     </select>
                 </label>
                 <label style="margin-right:12px;">
                     End Time:
-                    <select id="end-hour" style="padding:6px 10px; border-radius:6px; border:1px solid #ccc; margin-left:4px;">
+                    <select id="end-hour" style="padding:10px 18px; border-radius:6px; border:1px solid #ccc; margin-left:4px; font-size:1.25rem; min-width:120px; max-height:120px; overflow-y:auto;">
                         ${hourOptions(9, false)}
                     </select>
                 </label>
                 <input type="text" id="user-name" placeholder="Your name" required style="padding:6px 12px; border-radius:6px; border:1px solid #ccc; width:140px; margin-right:12px;">
-                <button type="submit" style="background:var(--osu-red); color:#fff; border:none; border-radius:6px; padding:8px 20px; font-weight:600;">Reserve</button>
+                <button type="submit" id="reserve-btn" style="background:var(--osu-red); color:#fff; border:none; border-radius:6px; padding:8px 20px; font-weight:600; font-size:1.15rem; transition:background 0.2s, box-shadow 0.2s; cursor:pointer;">
+                    Reserve
+                </button>
             </form>
             <div id="reservation-msg" style="margin-top:8px; color:#b71c1c;"></div>
         </div>`;
@@ -260,6 +262,19 @@ await showReservationForm(selectedDateStr);
                 msgDiv.textContent = result.error || "Error making reservation.";
             }
         };
+
+        // Add hover effect to Reserve button
+        const reserveBtn = document.getElementById('reserve-btn');
+        if (reserveBtn) {
+            reserveBtn.addEventListener('mouseenter', function() {
+                reserveBtn.style.background = "#b71c1c";
+                reserveBtn.style.boxShadow = "0 2px 12px rgba(226,24,54,0.15)";
+            });
+            reserveBtn.addEventListener('mouseleave', function() {
+                reserveBtn.style.background = "var(--osu-red)";
+                reserveBtn.style.boxShadow = "none";
+            });
+        }
     }
 
     async function renderCalendar() {
