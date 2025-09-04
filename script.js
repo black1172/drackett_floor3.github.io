@@ -353,8 +353,10 @@ function toLocalDateString(dateObj) {
 
 document.getElementById('bugForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const desc = document.getElementById('bug-description').value.trim();
-    const userEmail = document.getElementById('bug-email').value.trim();
+    const descInput = document.getElementById('bug-description');
+    const emailInput = document.getElementById('bug-email');
+    const desc = descInput.value.trim();
+    const userEmail = emailInput.value.trim();
     const res = await fetch('https://outreach-spray-lectures-temporarily.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -367,6 +369,9 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         msgDiv.style.background = "#eafbe7";
         msgDiv.style.padding = "8px";
         msgDiv.style.borderRadius = "6px";
+        // Clear the text boxes
+        descInput.value = "";
+        emailInput.value = "";
     } else {
         msgDiv.textContent = "Error submitting bug report. Please try again.";
         msgDiv.style.color = "#b71c1c";
