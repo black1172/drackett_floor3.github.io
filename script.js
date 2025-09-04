@@ -338,7 +338,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     e.preventDefault();
     const desc = document.getElementById('bug-description').value.trim();
     const userEmail = document.getElementById('bug-email').value.trim();
-    const res = await fetch('/report-bug', {
+    const res = await fetch('https://outreach-spray-lectures-temporarily.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
