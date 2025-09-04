@@ -346,7 +346,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     const msgDiv = document.getElementById('bugFormMsg');
     if (res.ok) {
         msgDiv.textContent = "Thank you! Your bug report has been submitted.";
-        msgDiv.style.color = "#228B22"; // green
+        msgDiv.style.color = "#228B22";
         msgDiv.style.background = "#eafbe7";
         msgDiv.style.padding = "8px";
         msgDiv.style.borderRadius = "6px";
