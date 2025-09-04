@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_MODEL = "phi3"
+OLLAMA_MODEL = "mistral"
 
 CHUNKS_PATH = os.path.join(os.path.dirname(__file__), "data", "chunks.json")
 chunks = []
@@ -93,7 +93,7 @@ async def chat(req: Request):
         json={
             "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "temperature": 0.2,
+            "temperature": 0.1,
             "max_tokens": 200
         }
     )
