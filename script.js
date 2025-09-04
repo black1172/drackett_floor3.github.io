@@ -417,3 +417,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function setUserCookie() {
+    if (!document.cookie.includes('user_id')) {
+        const userId = 'u_' + Math.random().toString(36).substr(2, 12);
+        document.cookie = `user_id=${userId}; path=/; max-age=31536000`; // 1 year
+        // Send to backend
+        fetch('https://outreach-spray-lectures-temporarily.trycloudflare.com/track-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, timestamp: new Date().toISOString() })
+        });
+    }
+}
+setUserCookie();

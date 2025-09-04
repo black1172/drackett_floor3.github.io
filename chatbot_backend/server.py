@@ -36,6 +36,7 @@ if os.path.exists(CHUNKS_PATH):
 
 RESERVATIONS_PATH = os.path.join(os.path.dirname(__file__), "data", "reservations.json")
 BUGS_PATH = os.path.join(os.path.dirname(__file__), "data", "bugs.json")
+USERS_PATH = os.path.join(os.path.dirname(__file__), "data", "users.json")
 
 def filter_query_words(query):
     words = query.lower().split()
@@ -200,3 +201,24 @@ async def add_reservation(
         reservations[date][slot] = user
     save_reservations(reservations)
     return JSONResponse({"success": True, "reservations": reservations})
+
+@app.post("/track-user")
+async def track_user(request: Request):
+    data = await request.json()
+    user_entry = {
+        "user_id": data.get("user_id"),
+        "timestamp": data.get("timestamp")
+    }
+    users = []
+    if os.path.exists(USERS_PATH):
+        try:
+            with open(USERS_PATH, "r", encoding="utf-8") as f:
+                users = json.load(f)
+                if not isinstance(users, list):
+                    users = []
+        except Exception:
+            users = []
+    users.append(user_entry)
+    with open(USERS_PATH, "w", encoding="utf-8") as f:
+        json.dump(users, f, indent=2)
+    return JSONResponse({"success": True})
