@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        const res = await fetch("https://outreach-spray-lectures-temporarily.trycloudflare.com/reservations");
+        const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -334,8 +334,10 @@ calendarContainer.innerHTML = html;
     await renderCalendar();
 });
 
+const BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
+
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://outreach-spray-lectures-temporarily.trycloudflare.com/reservations", {
+    const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })
@@ -357,7 +359,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     const emailInput = document.getElementById('bug-email');
     const desc = descInput.value.trim();
     const userEmail = emailInput.value.trim();
-    const res = await fetch('https://outreach-spray-lectures-temporarily.trycloudflare.com/report-bug', {
+    const res = await fetch('https://asia-hazard-armstrong-attached.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
@@ -378,16 +380,6 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
         msgDiv.style.background = "#fff3f3";
     }
 });
-
-// Add reservation to the backend
-async function addReservation(date, start, end, user) {
-    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, start, end, user })
-    });
-    return await res.json();
-}
 
 // Filter and render only upcoming events in the Events & Deadlines section
 document.addEventListener('DOMContentLoaded', function() {
@@ -423,7 +415,7 @@ function setUserCookie() {
         const userId = 'u_' + Math.random().toString(36).substr(2, 12);
         document.cookie = `user_id=${userId}; path=/; max-age=31536000`; // 1 year
         // Send to backend
-        fetch('https://outreach-spray-lectures-temporarily.trycloudflare.com/track-user', {
+        fetch('https://asia-hazard-armstrong-attached.trycloudflare.com/track-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId, timestamp: new Date().toISOString() })

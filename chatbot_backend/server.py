@@ -19,7 +19,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://black1172.github.io",
-        "https://outreach-spray-lectures-temporarily.trycloudflare.com"
+        "https://asia-hazard-armstrong-attached.trycloudflare.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
