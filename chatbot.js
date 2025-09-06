@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
+BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
 
 let history = "";
 let lastUser = "";
