@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
+const CHATBOT_BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
 
 let history = "";
 let lastUser = "";
@@ -30,7 +30,8 @@ async function sendMessage() {
     input.value = "";
 
     try {
-        const res = await fetch(BACKEND_URL, {
+        // Example:
+        const res = await fetch(CHATBOT_BACKEND_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: userText, history: `${lastUser}\n${lastBot}` })
@@ -71,7 +72,7 @@ async function checkBackendStatus() {
     chatBox.innerHTML = "";
 
     try {
-        const res = await fetch(BACKEND_URL.replace("/chat", "/"), { method: "GET" });
+        const res = await fetch(CHATBOT_BACKEND_URL.replace("/chat", "/"), { method: "GET" });
         if (res.ok) {
             displayMessage("bot", "👋 Hi! I'm your RA Assistant. How can I help you today?");
         } else {
@@ -84,7 +85,7 @@ async function checkBackendStatus() {
 
 // Fetch reservations from the backend
 async function fetchReservations() {
-    const res = await fetch(BACKEND_URL.replace("/chat", "/reservations"), { method: "GET" });
+    const res = await fetch(CHATBOT_BACKEND_URL.replace("/chat", "/reservations"), { method: "GET" });
     if (res.ok) {
         return await res.json();
     }
