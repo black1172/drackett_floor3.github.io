@@ -331,8 +331,37 @@ calendarContainer.innerHTML = html;
         await showReservationForm(); // Always uses selectedDateStr
     }
 
+    // Check backend status before rendering calendar
+    const backendUp = await checkScheduleBackendStatus();
+    if (!backendUp) return;
+
     await renderCalendar();
 });
+
+async function checkScheduleBackendStatus() {
+    const calendarContainer = document.getElementById('calendar-container');
+    try {
+        const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations", { method: "GET" });
+        if (!res.ok) throw new Error("Backend down");
+        // If backend is up, render calendar as normal
+        return true;
+    } catch {
+        // If backend is down, show temporarily unavailable message
+        if (calendarContainer) {
+            calendarContainer.innerHTML = `
+                <div style="text-align:center; padding:48px 0;">
+                    <span style="font-size:2rem; color:#e21836;">⏳</span>
+                    <h3 style="color:#e21836; margin-top:12px;">Scheduling Temporarily Unavailable</h3>
+                    <p style="color:#b71c1c; font-size:1.1rem; margin-top:8px;">
+                        The scheduling system is temporarily down.<br>
+                        Please try again later or contact your RA for urgent requests.
+                    </p>
+                </div>
+            `;
+        }
+        return false;
+    }
+}
 
 const BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
 
