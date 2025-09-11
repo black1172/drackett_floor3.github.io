@@ -1,4 +1,4 @@
-const CHATBOT_BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
+const CHATBOT_BACKEND_URL = "https://pointing-ventures-pine-zero.trycloudflare.com/chat";
 
 let history = "";
 let lastUser = "";

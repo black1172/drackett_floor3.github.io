@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations");
+        const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -341,12 +341,10 @@ calendarContainer.innerHTML = html;
 async function checkScheduleBackendStatus() {
     const calendarContainer = document.getElementById('calendar-container');
     try {
-        const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations", { method: "GET" });
+        const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations", { method: "GET" });
         if (!res.ok) throw new Error("Backend down");
-        // If backend is up, render calendar as normal
         return true;
     } catch {
-        // If backend is down, show temporarily unavailable message
         if (calendarContainer) {
             calendarContainer.innerHTML = `
                 <div style="text-align:center; padding:48px 0;">
@@ -363,10 +361,10 @@ async function checkScheduleBackendStatus() {
     }
 }
 
-const BACKEND_URL = "https://asia-hazard-armstrong-attached.trycloudflare.com/chat";
+const BACKEND_URL = "https://pointing-ventures-pine-zero.trycloudflare.com/chat";
 
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://asia-hazard-armstrong-attached.trycloudflare.com/reservations", {
+    const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })
@@ -388,7 +386,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     const emailInput = document.getElementById('bug-email');
     const desc = descInput.value.trim();
     const userEmail = emailInput.value.trim();
-    const res = await fetch('https://asia-hazard-armstrong-attached.trycloudflare.com/report-bug', {
+    const res = await fetch('https://pointing-ventures-pine-zero.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
