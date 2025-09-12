@@ -176,7 +176,6 @@ await showReservationForm(selectedDateStr);
 
         // Render reservation timeline for the full 24 hours
         function renderDayTimeline(dateStr, booked) {
-            // Build the timeline bar for 24 hours, with axis labels but only 24 slot squares (no numbers inside slots)
             let timelineHtml = `<div style="margin:24px auto 12px auto; max-width:700px;">
                 <div style="overflow-x:auto; width:100%; max-width:700px;">
                     <div style="display:flex; min-width:720px; align-items:center; height:54px; border-radius:8px; background:#f3f3f3; overflow:hidden; border:1px solid #ddd;">`;
@@ -184,7 +183,19 @@ await showReservationForm(selectedDateStr);
             for (let hour = 0; hour < 24; hour++) {
                 const slotKey = `${hour}-${hour+1}`;
                 const isBooked = booked[slotKey];
-                timelineHtml += `<div title="${isBooked ? isBooked : 'Available'}"
+                // Format time range for tooltip
+                let timeLabel = (() => {
+                    let startHour = hour % 12 === 0 ? 12 : hour % 12;
+                    let startSuffix = hour < 12 ? "AM" : "PM";
+                    let endHourRaw = hour + 1;
+                    let endHour = endHourRaw % 12 === 0 ? 12 : endHourRaw % 12;
+                    let endSuffix = endHourRaw < 12 ? "AM" : "PM";
+                    return `${startHour}:00 ${startSuffix} – ${endHour}:00 ${endSuffix}`;
+                })();
+                let tooltip = isBooked
+                    ? `${isBooked}\n${timeLabel}`
+                    : `Available\n${timeLabel}`;
+                timelineHtml += `<div title="${tooltip.replace(/\n/g, ' ')}"
                     style="
                         flex:1;
                         min-width:30px;
