@@ -372,10 +372,10 @@ async function checkScheduleBackendStatus() {
     }
 }
 
-const BACKEND_URL = "https://knock-amongst-creating-mileage.trycloudflare.com/chat";
+const BACKEND_URL = "https://knock-amongst-creating-mileage.trycloudflare.com";
 
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations", {
+    const res = await fetch(`${BACKEND_URL}/reservations, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })
