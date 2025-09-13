@@ -21,7 +21,6 @@ function initNavigation() {
                 top: scrollOffset,
                 behavior: 'smooth'
             });
-        }
 
         // Close sidebar menu on click
         if (checkInput) checkInput.checked = false;
@@ -351,23 +350,22 @@ calendarContainer.innerHTML = html;
 
 async function checkScheduleBackendStatus() {
     const calendarContainer = document.getElementById('calendar-container');
+    if (!calendarContainer) return false;
     try {
         const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations", { method: "GET" });
         if (!res.ok) throw new Error("Backend down");
         return true;
     } catch {
-        if (calendarContainer) {
-            calendarContainer.innerHTML = `
-                <div style="text-align:center; padding:48px 0;">
-                    <span style="font-size:2rem; color:#e21836;">⏳</span>
-                    <h3 style="color:#e21836; margin-top:12px;">Scheduling Temporarily Unavailable</h3>
-                    <p style="color:#b71c1c; font-size:1.1rem; margin-top:8px;">
-                        The scheduling system is temporarily down.<br>
-                        Please try again later or contact your RA for urgent requests.
-                    </p>
-                </div>
-            `;
-        }
+        calendarContainer.innerHTML = `
+            <div style="text-align:center; padding:48px 0;">
+                <span style="font-size:2rem; color:#e21836;">⏳</span>
+                <h3 style="color:#e21836; margin-top:12px;">Scheduling Temporarily Unavailable</h3>
+                <p style="color:#b71c1c; font-size:1.1rem; margin-top:8px;">
+                    The scheduling system is temporarily down.<br>
+                    Please try again later or contact your RA for urgent requests.
+                </p>
+            </div>
+        `;
         return false;
     }
 }
