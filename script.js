@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations");
+        const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -352,7 +352,7 @@ calendarContainer.innerHTML = html;
 async function checkScheduleBackendStatus() {
     const calendarContainer = document.getElementById('calendar-container');
     try {
-        const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations", { method: "GET" });
+        const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations", { method: "GET" });
         if (!res.ok) throw new Error("Backend down");
         return true;
     } catch {
@@ -372,23 +372,15 @@ async function checkScheduleBackendStatus() {
     }
 }
 
-const BACKEND_URL = "https://pointing-ventures-pine-zero.trycloudflare.com/chat";
+const BACKEND_URL = "https://knock-amongst-creating-mileage.trycloudflare.com/chat";
 
 async function addReservation(date, start, end, user) {
-    const res = await fetch("https://pointing-ventures-pine-zero.trycloudflare.com/reservations", {
+    const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ date, start, end, user })
     });
     return await res.json();
-}
-
-function toLocalDateString(dateObj) {
-    // Returns YYYY-MM-DD in local time
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
 }
 
 document.getElementById('bugForm').addEventListener('submit', async function(e) {
@@ -397,7 +389,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     const emailInput = document.getElementById('bug-email');
     const desc = descInput.value.trim();
     const userEmail = emailInput.value.trim();
-    const res = await fetch('https://pointing-ventures-pine-zero.trycloudflare.com/report-bug', {
+    const res = await fetch('https://knock-amongst-creating-mileage.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
@@ -453,7 +445,7 @@ function setUserCookie() {
         const userId = 'u_' + Math.random().toString(36).substr(2, 12);
         document.cookie = `user_id=${userId}; path=/; max-age=31536000`; // 1 year
         // Send to backend
-        fetch('https://asia-hazard-armstrong-attached.trycloudflare.com/track-user', {
+        fetch('https://knock-amongst-creating-mileage.trycloudflare.com/track-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId, timestamp: new Date().toISOString() })
