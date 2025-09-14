@@ -24,7 +24,8 @@ function initNavigation() {
 
         // Close sidebar menu on click
         if (checkInput) checkInput.checked = false;
-    });
+    }
+});
 }
 
 function hideLoadingOverlay() {
