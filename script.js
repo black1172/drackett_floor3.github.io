@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let selectedDateStr = toLocalDateString(new Date());
 
     async function fetchReservations() {
-        const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations");
+        const res = await fetch("https://live-successful-send-rolls.trycloudflare.com/reservations");
         if (res.ok) return await res.json();
         return {};
     }
@@ -353,7 +353,7 @@ async function checkScheduleBackendStatus() {
     const calendarContainer = document.getElementById('calendar-container');
     if (!calendarContainer) return false;
     try {
-        const res = await fetch("https://knock-amongst-creating-mileage.trycloudflare.com/reservations", { method: "GET" });
+        const res = await fetch("https://live-successful-send-rolls.trycloudflare.com/reservations", { method: "GET" });
         if (!res.ok) throw new Error("Backend down");
         return true;
     } catch {
@@ -371,7 +371,7 @@ async function checkScheduleBackendStatus() {
     }
 }
 
-const BACKEND_URL = "https://knock-amongst-creating-mileage.trycloudflare.com";
+const BACKEND_URL = "https://live-successful-send-rolls.trycloudflare.com";
 
 async function addReservation(date, start, end, user) {
     const res = await fetch(`${BACKEND_URL}/reservations`, {
@@ -388,7 +388,7 @@ document.getElementById('bugForm').addEventListener('submit', async function(e) 
     const emailInput = document.getElementById('bug-email');
     const desc = descInput.value.trim();
     const userEmail = emailInput.value.trim();
-    const res = await fetch('https://knock-amongst-creating-mileage.trycloudflare.com/report-bug', {
+    const res = await fetch('https://live-successful-send-rolls.trycloudflare.com/report-bug', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: desc, user_email: userEmail })
@@ -444,7 +444,7 @@ function setUserCookie() {
         const userId = 'u_' + Math.random().toString(36).substr(2, 12);
         document.cookie = `user_id=${userId}; path=/; max-age=31536000`; // 1 year
         // Send to backend
-        fetch('https://knock-amongst-creating-mileage.trycloudflare.com/track-user', {
+        fetch('https://live-successful-send-rolls.trycloudflare.com/track-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId, timestamp: new Date().toISOString() })

@@ -1,4 +1,4 @@
-const CHATBOT_BACKEND_URL = "https://knock-amongst-creating-mileage.trycloudflare.com/chat";
+const CHATBOT_BACKEND_URL = "https://live-successful-send-rolls.trycloudflare.com/chat";
 
 let history = "";
 let lastUser = "";
